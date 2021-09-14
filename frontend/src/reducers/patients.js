@@ -1,4 +1,4 @@
-import { GET_PATIENTS } from '../actions/types.js'
+import { GET_PATIENTS, DELETE_PATIENT } from '../actions/types.js'
 
 const initialState = {
     patients: []
@@ -10,7 +10,14 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 patients: action.payload,
-            }
+            };
+        case DELETE_PATIENT:
+            return {
+                ...state,
+                patients: state.patients.filter(
+                    patient => patient.id !== action.payload
+                )
+            };
         default:
             return state;
     }

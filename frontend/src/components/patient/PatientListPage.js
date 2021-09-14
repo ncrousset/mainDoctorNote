@@ -1,17 +1,14 @@
 import React, { Component, Fragment } from "react";
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getPatients } from "../../actions/patients";
+import { getPatients, deletePatient } from "../../actions/patients";
 
 import Main from "../layout/Main";
-
+import CardPatient from "./CardPatient";
 
 
 
 export class PatientListPage extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
 
     static propTypes = {
         patients: PropTypes.array.isRequired
@@ -21,13 +18,23 @@ export class PatientListPage extends Component {
         this.props.getPatients();
     }
 
+    test = (id) => {
+        console.log(`vas a eliminar este id: ${id}`)
+    }
+
     render() {
         return (
             <Main>
                 <Fragment>
-                    {this.props.patients.map(patient => (
-                        <div>{patient.last_name}</div>
-                    ))}
+                    <section className="text-gray-600 body-font">
+                        <div className="container px-5 py-10 mx-auto">
+                            <div className="flex flex-wrap -m-2">
+                                {this.props.patients.map(patient => (
+                                    <CardPatient patient={patient} onDelete={this.props.deletePatient} />
+                                ))}
+                            </div>
+                        </div>
+                    </section>
                 </Fragment>
             </Main>
         )
@@ -39,4 +46,7 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { getPatients })(PatientListPage)
+export default connect(
+    mapStateToProps,
+    { getPatients, deletePatient }
+)(PatientListPage);
