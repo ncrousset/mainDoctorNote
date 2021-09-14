@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Main from "../layout/Main";
 
 export default class PatientListPage extends Component {
     constructor(props) {
@@ -6,6 +7,10 @@ export default class PatientListPage extends Component {
     }
 
     render() {
-        return <p>This is the patients list</p>;
+        return (
+            <Main>
+                Pasiente
+            </Main>
+        )
     }
 }
