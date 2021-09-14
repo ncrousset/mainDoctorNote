@@ -13,7 +13,6 @@ const Main = (props) => {
                     <div className="container">
                         {props.children}
                     </div>
-
                 </div>
             </div>
         </Fragment>
