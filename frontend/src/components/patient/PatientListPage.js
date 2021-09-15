@@ -7,6 +7,9 @@ import Main from "../layout/Main";
 import CardPatient from "./CardPatient";
 import CreatePatientPage from "./CreatePatientPage";
 
+// import Alerts from "../layout/Alerts";
+
+import { useAlert } from 'react-alert'
 
 
 export class PatientListPage extends Component {
@@ -43,7 +46,6 @@ export class PatientListPage extends Component {
     render() {
         return (
             <Main>
-
                 <Fragment>
                     <section className="text-gray-600 body-font">
                         <div className="container px-5 py-5 mx-auto">

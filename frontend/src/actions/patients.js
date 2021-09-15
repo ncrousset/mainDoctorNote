@@ -1,4 +1,10 @@
-import { GET_PATIENTS, DELETE_PATIENT, ADD_PATIENT } from './types';
+import {
+    GET_PATIENTS,
+    DELETE_PATIENT,
+    ADD_PATIENT,
+    GET_ERRORS
+} from './types';
+
 import axios from 'axios';
 
 //GET PATIENTS
@@ -34,5 +40,15 @@ export const addPatient = (patient) => dispatch => {
                 type: ADD_PATIENT,
                 payload: response.data
             });
-        }).catch(error => console.log(error))
+        }).catch(err => {
+            const errors = {
+                msg: err.response.data,
+                status: err.response.status
+            }
+
+            dispatch({
+                type: GET_ERRORS,
+                payload: errors
+            })
+        })
 }

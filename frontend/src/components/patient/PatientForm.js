@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addPatient } from '../../actions/patients'
+import { toast } from 'react-toastify';
+
 
 export class PatientForm extends Component {
 
@@ -18,7 +20,7 @@ export class PatientForm extends Component {
     }
 
     static propTypes = {
-        addPatient: PropTypes.func.isRequired;
+        addPatient: PropTypes.func.isRequired
     }
 
     constructor(props) {
@@ -32,11 +34,13 @@ export class PatientForm extends Component {
     onSubmit = event => {
         event.preventDefault();
 
-        this.props.addPatient(this.state);
+        toast.success("Success Notification !", {
+            position: toast.POSITION.TOP_CENTER
+        });
 
-        // console.log(this.state);
+        const response = this.props.addPatient(this.state)
 
-        this.props.onClose();
+        // this.props.onClose();
     }
 
     render() {
