@@ -1,4 +1,4 @@
-import { GET_PATIENTS, DELETE_PATIENT } from './types';
+import { GET_PATIENTS, DELETE_PATIENT, ADD_PATIENT } from './types';
 import axios from 'axios';
 
 //GET PATIENTS
@@ -21,6 +21,18 @@ export const deletePatient = (id) => dispatch => {
             dispatch({
                 type: DELETE_PATIENT,
                 payload: id
+            });
+        }).catch(error => console.log(error))
+}
+
+//ADD PATIENT
+export const addPatient = (patient) => dispatch => {
+    axios
+        .post('/api/patients/', patient)
+        .then(response => {
+            dispatch({
+                type: ADD_PATIENT,
+                payload: response.data
             });
         }).catch(error => console.log(error))
 }
