@@ -10,9 +10,15 @@ import store from '../store';
 import { ToastContainer } from 'react-toastify';
 import Alerts from "./layout/Alerts";
 
+import { loadUser } from "../actions/auth"
+
 export default class App extends Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        store.dispatch(loadUser());
     }
 
     render() {
