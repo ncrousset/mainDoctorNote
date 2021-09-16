@@ -1,11 +1,13 @@
 import { returnErrors } from "./messages";
 import { Token } from "../common/Token"
+import { Redirect } from "react-router-dom";
 
 import {
     GET_PATIENTS,
     DELETE_PATIENT,
     ADD_PATIENT,
     GET_ERRORS,
+    LAST_SUCCESS_ACTION,
 } from './types';
 
 import axios from 'axios';
@@ -21,7 +23,6 @@ export const getPatients = () => (dispatch, getState) => {
                 payload: response.data
             });
         }).catch(error => {
-            console.log('resorver mas adelante')
             dispatch(returnErrors(error.response.data.detail, error.response.status))
             dispatch({ type: GET_ERRORS })
         })
@@ -41,22 +42,31 @@ export const deletePatient = (id) => dispatch => {
 
 //ADD PATIENT
 export const addPatient = (patient) => (dispatch, getState) => {
-    axios
-        .post('/api/patients/', patient, Token.getTokenConfig(getState))
-        .then(response => {
-            dispatch({
-                type: ADD_PATIENT,
-                payload: response.data
-            });
-        }).catch(err => {
-            const errors = {
-                msg: err.response.data,
-                status: err.response.status
-            }
+    return new Promise((resolve, reject) => {
+        axios
+            .post('/api/patients/', patient, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: ADD_PATIENT,
+                    payload: response.data
+                });
 
-            dispatch({
-                type: GET_ERRORS,
-                payload: errors
+                resolve(response.data)
+
+            }).catch(error => {
+
+                const errors = {
+                    type: 'obj',
+                    msg: error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
             })
-        })
+    })
 }

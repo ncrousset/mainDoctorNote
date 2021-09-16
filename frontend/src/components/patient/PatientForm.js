@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addPatient } from '../../actions/patients'
+import { Redirect } from 'react-router-dom'
 
 export class PatientForm extends Component {
 
@@ -12,13 +13,14 @@ export class PatientForm extends Component {
         phone: '',
         insurance: '',
         idd: '',
-        sex: '',
-        birth_date: '',
-        next_appointment: '',
+        sex: null,
+        birth_date: null,
+        next_appointment: null,
     }
 
     static propTypes = {
-        addPatient: PropTypes.func.isRequired
+        addPatient: PropTypes.func.isRequired,
+        lastSuccessAction: PropTypes.object
     }
 
     constructor(props) {
@@ -32,8 +34,14 @@ export class PatientForm extends Component {
     onSubmit = event => {
         event.preventDefault();
         this.props.addPatient(this.state)
-
-        // this.props.onClose();
+            .then((response) => {
+                console.log(response)
+                this.props.onClose()
+                location.href = `/patient/${response.id}`
+            })
+            .catch(error => {
+                console.log('entro en catch')
+            })
     }
 
     render() {
@@ -46,13 +54,13 @@ export class PatientForm extends Component {
                     <div className="flex justify-between py-2">
                         <div className="px-1 w-1/2">
                             <label className="text-gray-800 font-semibold" htmlFor="first_name">First Name</label>
-                            <input onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
+                            <input required onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none  
                         focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="text" name="first_name" id="first_name" />
                         </div>
                         <div className="px-1 w-1/2">
                             <label className="text-gray-800 font-semibold" htmlFor="last_name">Last Name</label>
-                            <input onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
+                            <input required onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none 
                         focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="text" name="last_name" id="last_name" />
                         </div>
@@ -92,9 +100,10 @@ export class PatientForm extends Component {
                         <div className="px-1 w-1/2">
                             <label className="text-gray-800 font-semibold" htmlFor="sex">Sex</label>
 
-                            <select onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
+                            <select required onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none  
                         focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" name="sex" id="sex" >
+                                <option value=""></option>
                                 <option value="m">Masculine</option>
                                 <option value="f">Feminine</option>
                                 <option value="o">Other</option>
@@ -135,4 +144,8 @@ export class PatientForm extends Component {
     }
 }
 
-export default connect(null, { addPatient })(PatientForm)
+const mapStateToProps = state => ({
+    lastSuccessAction: state.lastSuccessAction
+})
+
+export default connect(mapStateToProps, { addPatient })(PatientForm)

@@ -14,10 +14,17 @@ export class Alerts extends Component {
         const { error, alert } = this.props
 
         if (error !== prevProps.error) {
-            console.log("entro aqui")
-            toast.warn(error.msg.detail, {
-                position: toast.POSITION.TOP_CENTER
-            });
+
+            if (error.type == 'obj') {
+                Object.entries(error.msg).map(msg => {
+                    toast.error(msg.join(': '), {
+                        position: toast.POSITION.TOP_CENTER
+                    });
+                })
+
+            }
+
+
         }
 
     }

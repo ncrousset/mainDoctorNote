@@ -1,6 +1,7 @@
 import { GET_ERRORS } from '../actions/types';
 
 const initialState = {
+    type: 'str',
     msg: {},
     status: null,
 };
@@ -11,6 +12,7 @@ export default function (state = initialState, action) {
             return {
                 msg: action.payload.msg,
                 status: action.payload.status,
+                type: action.payload.type
             };
         default:
             return state;
