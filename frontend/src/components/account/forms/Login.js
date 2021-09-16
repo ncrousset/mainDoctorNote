@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { login } from '../../../actions/auth';
 
 export class Login extends Component {
 
@@ -8,18 +11,26 @@ export class Login extends Component {
         password: ''
     }
 
+    static propTypes = {
+        login: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool
+    }
+
     onChange = event => this.setState({
         [event.target.name]: event.target.value
     })
 
     onSubmit = event => {
-        event.preventDefault();
-        console.log("Submit")
+        event.preventDefault()
+        this.props.login(this.state.username, this.state.password)
     }
 
     render() {
-        const { username, password } = this.state;
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/patients" />
+        }
 
+        const { username, password } = this.state;
         return (
             <form method="#" action="#" className="mt-10" onSubmit={this.onSubmit} >
                 <div>
@@ -81,4 +92,8 @@ export class Login extends Component {
     }
 }
 
-export default Login
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { login })(Login)
