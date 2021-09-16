@@ -18,7 +18,7 @@ class Patient(models.Model):
     idd = models.CharField(max_length=20, blank=True, null=True)
     phone = models.CharField(max_length=20, blank=True, null=True)
     sex = models.CharField(max_length=15, choices=SEX)
-    next_appointment = models.DateField(blank=True, null=True)
+    next_appointment = models.DateTimeField(blank=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
     created = models.DateTimeField(auto_now_add=True)
