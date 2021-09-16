@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MainSimple from '../layout/MainSimple';
 import DecoratorsCard from '../layout/DecoratorsCard';
-import LoginForm from './LoginForm'
+import LoginForm from './forms/Login'
 import Label from './Label'
 
 export default class LoginPage extends Component {
