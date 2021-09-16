@@ -1,6 +1,7 @@
 import axios from "axios";
 import { returnErrors } from "./messages";
 import { useLocation } from 'react-router-dom';
+import { Token } from "../common/Token";
 
 import {
     USER_LOADED,
@@ -16,7 +17,7 @@ export const loadUser = () => (dispatch, getState) => {
     // User Loading
     dispatch({ type: USER_LOADING });
 
-    axios.get('/api/auth/user', tokenConfig(getState))
+    axios.get('/api/auth/user', Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: USER_LOADED,
@@ -57,7 +58,7 @@ export const login = (username, password) => dispatch => {
 // LOGOUT USER
 export const logout = () => (dispatch, getState) => {
 
-    axios.post('/api/auth/logout', null, tokenConfig(getState))
+    axios.post('/api/auth/logout', null, Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: LOGOUT_SUCCESS,
@@ -65,24 +66,4 @@ export const logout = () => (dispatch, getState) => {
         }).catch(error => {
             dispatch(returnErrors(error.response.data, error.response.status))
         })
-}
-
-
-const tokenConfig = getState => {
-    // Get token from state
-    const token = getState().auth.token;
-
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
-    // If token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`
-    }
-
-    return config
 }

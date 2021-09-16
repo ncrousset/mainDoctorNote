@@ -1,4 +1,5 @@
 import { returnErrors } from "./messages";
+import { Token } from "../common/Token"
 
 import {
     GET_PATIENTS,
@@ -13,22 +14,7 @@ import axios from 'axios';
 // /api/patients
 export const getPatients = () => (dispatch, getState) => {
 
-    // Get token from state
-    const token = getState().auth.token;
-
-    // Headers
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }
-
-    // If token, add to headers config
-    if (token) {
-        config.headers['Authorization'] = `Token ${token}`
-    }
-
-    axios.get('/api/patients/', config)
+    axios.get('/api/patients/', Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: GET_PATIENTS,
@@ -54,9 +40,9 @@ export const deletePatient = (id) => dispatch => {
 }
 
 //ADD PATIENT
-export const addPatient = (patient) => dispatch => {
+export const addPatient = (patient) => (dispatch, getState) => {
     axios
-        .post('/api/patients/', patient)
+        .post('/api/patients/', patient, Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: ADD_PATIENT,

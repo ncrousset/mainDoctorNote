@@ -90,11 +90,11 @@ export class PatientForm extends Component {
 
                     <div className="flex justify-between py-2">
                         <div className="px-1 w-1/2">
-                            <label className="text-gray-800 font-semibold" htmlFor="insurance">Sex</label>
+                            <label className="text-gray-800 font-semibold" htmlFor="sex">Sex</label>
 
                             <select onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none  
-                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" name="insurance" id="insurance" >
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" name="sex" id="sex" >
                                 <option value="m">Masculine</option>
                                 <option value="f">Feminine</option>
                                 <option value="o">Other</option>
