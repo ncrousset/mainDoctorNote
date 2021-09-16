@@ -1,6 +1,6 @@
 from django.db.models.query import QuerySet
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from .serializers import PatientSerialize
 from .models import Patient
 from rest_framework.views import APIView
@@ -18,7 +18,9 @@ class PatientList(APIView):
     """
     List all patient, or create a new patient
     """
-    authentication_classes = []
+    permission_classes = [
+        permissions.AllowAny
+    ]
 
     def get(self, request, format=None):
         patients = Patient.objects.all()
@@ -38,6 +40,9 @@ class PatientDetail(APIView):
     """
     Retrieve, update or delete patient instance
     """
+    permission_classes = [
+        permissions.AllowAny
+    ]
 
     def get_object(self, pk):
         try:
