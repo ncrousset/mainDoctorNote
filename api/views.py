@@ -8,6 +8,9 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.parsers import JSONParser
 
+# from django.views.decorators.csrf import csrf_exempt
+# from braces.views import CsrfExemptMixin
+
 from django.http import Http404
 
 
@@ -15,6 +18,7 @@ class PatientList(APIView):
     """
     List all patient, or create a new patient
     """
+    authentication_classes = []
 
     def get(self, request, format=None):
         patients = Patient.objects.all()
