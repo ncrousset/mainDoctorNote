@@ -1,9 +1,13 @@
 import React, { Component } from "react";
+
 import PatientListPage from "./patient/PatientListPage";
 import CreatePatientPage from "./patient/CreatePatientPage";
 import LoginPage from "./account/LoginPage";
 import RegisterPage from "./account/RegisterPage";
 import PrivateRoute from "./common/PrivateRoute";
+import { Patient as PatientDetail } from "./patient/Patient";
+import store from '../store';
+import { loadUser } from '../actions/auth';
 
 import {
     BrowserRouter as Router,
@@ -17,6 +21,10 @@ export default class HomePage extends Component {
         super(props);
     }
 
+    componentDidMount() {
+        store.dispatch(loadUser());
+    }
+
     render() {
         return (
             <Router>
@@ -24,8 +32,8 @@ export default class HomePage extends Component {
                     <Route exact path='/'><p>This is the home page</p></Route>
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
-                    <PrivateRoute path='/patients' component={PatientListPage}></PrivateRoute>
-                    <PrivateRoute path='/patients/create' component={CreatePatientPage}></PrivateRoute>
+                    <PrivateRoute exact path='/patients' component={PatientListPage} ></PrivateRoute>
+                    <PrivateRoute path='/patients/:id' component={PatientDetail}  ></PrivateRoute>
                 </Switch>
             </Router>
         );
