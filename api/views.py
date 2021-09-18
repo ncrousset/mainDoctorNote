@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 # from braces.views import CsrfExemptMixin
 
 from django.http import Http404
+import datetime
 
 
 class PatientList(APIView):
@@ -62,6 +63,12 @@ class PatientDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        patient = self.get_object(pk)
-        patient.delete()
+        try:
+            patient = self.get_object(pk)
+            patient.deleted = True
+            patient.deleted_date = datetime.datetime.now()
+            patient.save()
+        except ValueError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
         return Response(status=status.HTTP_204_NO_CONTENT)

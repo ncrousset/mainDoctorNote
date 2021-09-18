@@ -15,6 +15,7 @@ class PatientSerialize(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = ('id', 'first_name', 'full_name', 'last_name', 'birth_date', 'email',
-                  'insurance', 'idd', 'phone', 'sex', 'next_appointment', 'user_id')
+                  'insurance', 'idd', 'phone', 'sex', 'next_appointment', 'deleted',
+                  'deleted_date', 'user_id')
         extra_kwargs = {'user_id': {'required': False}}
         validators = []

@@ -21,6 +21,9 @@ class Patient(models.Model):
     next_appointment = models.DateTimeField(blank=True, null=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    deleted = models.BooleanField(default=False, blank=True, null=True)
+    deleted_date = models.DateTimeField(blank=True, null=True)
+
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
