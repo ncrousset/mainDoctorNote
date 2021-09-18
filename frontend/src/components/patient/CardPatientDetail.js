@@ -1,11 +1,21 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'react-redux'
+
 import { FaUserAlt, FaCalendarAlt, FaPhoneAlt, FaTransgender, FaMailBulk } from "react-icons/fa";
 import { HiIdentification } from "react-icons/hi";
 import { RiUserFill } from "react-icons/ri";
+
+import { deletePatient } from '../../actions/patients';
+
 import PropTypes from 'prop-types'
 
 
 export class CardPatientDetail extends Component {
+
+    static propTypes = {
+        patient: PropTypes.object.isRequired,
+        deletePatient: PropTypes.func.isRequired
+    }
 
     SEX = {
         'm': 'masculino',
@@ -15,11 +25,21 @@ export class CardPatientDetail extends Component {
 
     constructor() {
         super();
-
     }
 
     componentDidMount() {
 
+    }
+
+    deletePatient = (event) => {
+        event.preventDefault();
+
+        if (confirm("Are you sure to delete this patient?")) {
+            this.props.deletePatient(this.props.patient.id)
+                .then(response => {
+                    location.pathname = '/patients'
+                })
+        }
     }
 
     render() {
@@ -99,16 +119,23 @@ export class CardPatientDetail extends Component {
                         </div>
                     </div>
                     <div>
-                        <span className="absolute py-2 px-8 text-sm text-white top-5 right-32 bg-yellow-500 rounded-md transform translate-x-2 -translate-y-3 shadow-xl">Delete</span>
+                        <button
+                            onClick={this.deletePatient}
+                            className="absolute py-2 px-8 text-sm text-white top-5 right-32 bg-yellow-500 rounded-md transform translate-x-2 -translate-y-3 shadow-xl">
+                            Delete
+                        </button>
+
                         <span className="absolute py-2 px-8 text-sm text-white top-5 right-6 bg-green-500 rounded-md transform translate-x-2 -translate-y-3 shadow-xl">Edit</span>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     }
 }
 
+const mapStateToProps = state => ({
 
+});
 
-export default CardPatientDetail
+export default connect(mapStateToProps, { deletePatient })(CardPatientDetail)
 

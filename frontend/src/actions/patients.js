@@ -43,18 +43,23 @@ export const getPatient = (id) => (dispatch, getState) => {
         })
 }
 
-
-
 // DELETE PATIENT
-export const deletePatient = (id) => dispatch => {
-    axios
-        .delete(`/api/patients/${id}/`, { id: id })
-        .then(response => {
-            dispatch({
-                type: DELETE_PATIENT,
-                payload: id
-            });
-        }).catch(error => console.log(error))
+export const deletePatient = (id) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .delete(`/api/patients/${id}/`, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: DELETE_PATIENT,
+                    payload: id
+                });
+                resolve(response)
+            }).catch(error => {
+                dispatch(returnErrors(error.response.data.detail, error.response.status))
+                dispatch({ type: GET_ERRORS })
+                reject()
+            })
+    })
 }
 
 //ADD PATIENT

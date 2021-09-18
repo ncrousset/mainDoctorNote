@@ -7,9 +7,6 @@ import { getPatient } from '../../actions/patients'
 import Main from '../layout/Main'
 import CardPatientDetail from './CardPatientDetail'
 
-import { FaUserAlt, FaCalendarAlt, FaPhoneAlt, FaTransgender, FaMailBulk } from "react-icons/fa";
-import { HiIdentification } from "react-icons/hi";
-import { RiUserFill } from "react-icons/ri";
 
 export class PatientDetailPage extends Component {
 
@@ -33,7 +30,6 @@ export class PatientDetailPage extends Component {
                 <section className="text-gray-600 body-font">
                     <div className="container px-5 py-5 mx-auto">
                         <div className="min-h-full bg-gray-100 flex flex-col">
-
                             <CardPatientDetail patient={this.props.patient != null && this.props.patient} />
                         </div>
                     </div>
