@@ -2,7 +2,7 @@ import {
     GET_PATIENTS,
     DELETE_PATIENT,
     ADD_PATIENT
-} from '../actions/types.js'
+} from '../actions/types'
 
 const initialState = {
     patients: []

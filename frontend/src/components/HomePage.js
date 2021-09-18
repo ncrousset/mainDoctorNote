@@ -5,7 +5,8 @@ import CreatePatientPage from "./patient/CreatePatientPage";
 import LoginPage from "./account/LoginPage";
 import RegisterPage from "./account/RegisterPage";
 import PrivateRoute from "./common/PrivateRoute";
-import { Patient as PatientDetail } from "./patient/Patient";
+// import { Patient } from "./patient/Patient";
+import PatientDetailPage from "./patient/PatientDetailPage";
 import store from '../store';
 import { loadUser } from '../actions/auth';
 
@@ -33,7 +34,7 @@ export default class HomePage extends Component {
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
                     <PrivateRoute exact path='/patients' component={PatientListPage} ></PrivateRoute>
-                    <PrivateRoute path='/patients/:id' component={PatientDetail}  ></PrivateRoute>
+                    <PrivateRoute path='/patients/:id' component={PatientDetailPage}  ></PrivateRoute>
                 </Switch>
             </Router>
         );

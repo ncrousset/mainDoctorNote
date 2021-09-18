@@ -7,7 +7,7 @@ import {
     DELETE_PATIENT,
     ADD_PATIENT,
     GET_ERRORS,
-    LAST_SUCCESS_ACTION,
+    GET_PATIENT
 } from './types';
 
 import axios from 'axios';
@@ -27,6 +27,23 @@ export const getPatients = () => (dispatch, getState) => {
             dispatch({ type: GET_ERRORS })
         })
 }
+
+// GET Patient
+export const getPatient = (id) => (dispatch, getState) => {
+
+    axios.get(`/api/patients/${id}`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: GET_PATIENT,
+                payload: response.data
+            });
+        }).catch(error => {
+            dispatch(returnErrors(error.response.data.detail, error.response.status))
+            dispatch({ type: GET_ERRORS })
+        })
+}
+
+
 
 // DELETE PATIENT
 export const deletePatient = (id) => dispatch => {
