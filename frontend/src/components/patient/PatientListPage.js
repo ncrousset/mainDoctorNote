@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import Main from "../layout/Main";
 import CardPatient from "./CardPatient";
-import CreatePatientPage from "./CreatePatientPage";
+import ModalForm from "./ModalForm";
 
 
 export class PatientListPage extends Component {
@@ -57,7 +57,7 @@ export class PatientListPage extends Component {
                         </div>
                     </div>
                 </section>
-                {this.state.show && <CreatePatientPage onClose={() => this.hideCreateForm()} />}
+                {this.state.show && <ModalForm onClose={() => this.hideCreateForm()} />}
 
             </Main>
         )

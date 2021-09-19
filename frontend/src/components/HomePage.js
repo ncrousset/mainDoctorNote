@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import PatientListPage from "./patient/PatientListPage";
-import CreatePatientPage from "./patient/CreatePatientPage";
 import LoginPage from "./account/LoginPage";
 import RegisterPage from "./account/RegisterPage";
 import PrivateRoute from "./common/PrivateRoute";

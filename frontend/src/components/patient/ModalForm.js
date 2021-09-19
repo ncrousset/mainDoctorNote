@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import PatientForm from "./PatientForm";
 
-export default class CreatePatientPage extends Component {
+export default class ModalForm extends Component {
     constructor(props) {
         super(props);
     }
@@ -18,7 +18,7 @@ export default class CreatePatientPage extends Component {
                     <div className="bg-white rounded-lg w-1/2 ">
                         <div className="flex flex-col items-start p-4">
                             <div className="flex items-center w-full border-b py-2">
-                                <div className="text-gray-900 font-medium text-lg">Crear patient</div>
+                                <div className="text-gray-900 font-medium text-lg">{this.props.title}</div>
                             </div>
 
                             <div className="">
@@ -30,4 +30,8 @@ export default class CreatePatientPage extends Component {
             </>
         );
     }
+}
+
+ModalForm.defaultProps = {
+    title: 'Add patient'
 }
