@@ -45,7 +45,7 @@ export class CardPatientDetail extends Component {
     render() {
         return (
             <div className="containter w-full mx-auto">
-                <div className="bg-white  p-8 rounded-lg shadow-lg relative hover:shadow-2xl transition duration-500">
+                <div className="bg-white  p-8 rounded-lg shadow-md relative hover:shadow-lg transition duration-500">
                     <h2 className="text-xl text-gray-800 font-semibold mb-3 flex">
                         <FaUserAlt className="mr-2" /><span> {this.props.patient.full_name} </span>
                     </h2>
@@ -121,7 +121,7 @@ export class CardPatientDetail extends Component {
                     <div>
                         <button
                             onClick={this.deletePatient}
-                            className="absolute py-2 px-8 text-sm text-white top-5 right-32 bg-yellow-500 rounded-md transform translate-x-2 -translate-y-3 shadow-xl">
+                            className="absolute py-2 px-8 text-sm text-white top-5 right-32 bg-yellow-500 shadow-xl hover:bg-yellow-600 rounded-md transform translate-x-2 -translate-y-3 ">
                             Delete
                         </button>
 
