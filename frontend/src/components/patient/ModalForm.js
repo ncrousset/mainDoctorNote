@@ -5,6 +5,22 @@ import PatientForm from "./PatientForm";
 export default class ModalForm extends Component {
     constructor(props) {
         super(props);
+
+        const fieldPatient = {
+            first_name: '',
+            last_name: '',
+            email: '',
+            phone: '',
+            insurance: '',
+            idd: '',
+            sex: null,
+            birth_date: null,
+            next_appointment: null,
+        }
+
+        this.patient = (this.props.patient !== null)
+            ? this.props.patient
+            : fieldPatient
     }
 
     onClose = () => {
@@ -22,7 +38,7 @@ export default class ModalForm extends Component {
                             </div>
 
                             <div className="">
-                                <PatientForm onClose={this.onClose} />
+                                <PatientForm onClose={this.onClose} patient={this.patient} edit={this.props.edit} />
                             </div>
                         </div>
                     </div>
@@ -33,5 +49,6 @@ export default class ModalForm extends Component {
 }
 
 ModalForm.defaultProps = {
-    title: 'Add patient'
+    title: 'Add patient',
+    edit: false
 }

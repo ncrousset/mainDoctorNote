@@ -7,7 +7,8 @@ import {
     DELETE_PATIENT,
     ADD_PATIENT,
     GET_ERRORS,
-    GET_PATIENT
+    GET_PATIENT,
+    UPDATE_PATIENT
 } from './types';
 
 import axios from 'axios';
@@ -92,3 +93,35 @@ export const addPatient = (patient) => (dispatch, getState) => {
             })
     })
 }
+
+//UPDATE PATIENT
+export const updatePatient = (patient) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .put(`/api/patients/${patient.id}/`, patient, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: UPDATE_PATIENT,
+                    payload: response.data
+                });
+
+                resolve(response.data)
+
+            }).catch(error => {
+                console.log(error)
+                const errors = {
+                    type: 'str',
+                    msg: error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
+}
+

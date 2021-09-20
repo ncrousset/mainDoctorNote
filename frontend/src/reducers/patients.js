@@ -1,7 +1,8 @@
 import {
     GET_PATIENTS,
     DELETE_PATIENT,
-    ADD_PATIENT
+    ADD_PATIENT,
+    UPDATE_PATIENT
 } from '../actions/types'
 
 const initialState = {
@@ -22,6 +23,7 @@ export default function (state = initialState, action) {
                     patient => patient.id !== action.payload
                 )
             };
+        case UPDATE_PATIENT:
         case ADD_PATIENT:
             return {
                 ...state,

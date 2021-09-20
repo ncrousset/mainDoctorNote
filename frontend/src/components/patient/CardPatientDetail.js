@@ -14,7 +14,8 @@ export class CardPatientDetail extends Component {
 
     static propTypes = {
         patient: PropTypes.object.isRequired,
-        deletePatient: PropTypes.func.isRequired
+        deletePatient: PropTypes.func.isRequired,
+        onOpenModal: PropTypes.func.isRequired
     }
 
     SEX = {
@@ -67,7 +68,7 @@ export class CardPatientDetail extends Component {
                             <label className="font-semibold flex">
                                 <FaCalendarAlt className="relative top-1 mr-1" />
                                 Birth date</label>
-                            <span className="">{this.props.patient.birth_name}</span>
+                            <span className="">{this.props.patient.birth_date}</span>
                         </div>
 
                         <div className="flex flex-col">
@@ -125,7 +126,9 @@ export class CardPatientDetail extends Component {
                             Delete
                         </button>
 
-                        <span className="absolute py-2 px-8 text-sm text-white top-5 right-6 bg-green-500 rounded-md transform translate-x-2 -translate-y-3 shadow-xl">Edit</span>
+                        <button
+                            onClick={() => { this.props.onOpenModal() }}
+                            className="absolute py-2 px-8 text-sm text-white top-5 right-6 bg-green-500 rounded-md transform hover:bg-green-600 translate-x-2 -translate-y-3 shadow-xl">Edit</button>
                     </div>
                 </div>
             </div >
