@@ -31,7 +31,7 @@ export default function (state = initialState, action) {
                 patients: [...state.patients, action.payload]
             }
         case GET_PAGINATOR_PATIENTS:
-            const LIMIT_PAGE = 10
+            const LIMIT_PAGE = 18
 
             const end_page = (action.payload.page * LIMIT_PAGE > action.payload.total)
                 ? action.payload.total : action.payload.page * LIMIT_PAGE

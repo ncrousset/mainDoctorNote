@@ -45,7 +45,7 @@ def faker_patients_for_test(self):
 
 
 class PatientList(generics.ListAPIView):
-    LIMIT_PAGE = 10
+    LIMIT_PAGE = 18
     serializer_class = PatientSerialize
     permission_classes = [
         permissions.IsAuthenticated
