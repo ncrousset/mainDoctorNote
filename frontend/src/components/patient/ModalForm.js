@@ -18,7 +18,7 @@ export default class ModalForm extends Component {
             next_appointment: null,
         }
 
-        this.patient = (this.props.patient !== null)
+        this.patient = (this.props.patient != null)
             ? this.props.patient
             : fieldPatient
     }

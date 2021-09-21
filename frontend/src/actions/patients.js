@@ -67,7 +67,7 @@ export const deletePatient = (id) => (dispatch, getState) => {
 export const addPatient = (patient) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         axios
-            .post('/api/patients/', patient, Token.getTokenConfig(getState))
+            .post('/api/patients/create', patient, Token.getTokenConfig(getState))
             .then(response => {
                 dispatch({
                     type: ADD_PATIENT,
@@ -79,7 +79,7 @@ export const addPatient = (patient) => (dispatch, getState) => {
             }).catch(error => {
 
                 const errors = {
-                    type: 'obj',
+                    type: 'str',
                     msg: error.response.data,
                     status: error.response.status
                 }

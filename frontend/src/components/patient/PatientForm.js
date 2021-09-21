@@ -48,6 +48,8 @@ export class PatientForm extends Component {
     }
 
     render() {
+        console.log(this.stat)
+
         const { first_name, last_name, email, phone,
             insurance, idd, sex, birth_date, next_appointment } = this.state
 
