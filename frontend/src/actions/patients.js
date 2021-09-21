@@ -32,7 +32,7 @@ export const getPatients = () => (dispatch, getState) => {
 // GET Patient
 export const getPatient = (id) => (dispatch, getState) => {
 
-    axios.get(`/api/patients/${id}`, Token.getTokenConfig(getState))
+    axios.get(`/api/patient/${id}`, Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: GET_PATIENT,
@@ -48,7 +48,7 @@ export const getPatient = (id) => (dispatch, getState) => {
 export const deletePatient = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         axios
-            .delete(`/api/patients/${id}/`, Token.getTokenConfig(getState))
+            .delete(`/api/patient/${id}/`, Token.getTokenConfig(getState))
             .then(response => {
                 dispatch({
                     type: DELETE_PATIENT,
@@ -98,7 +98,7 @@ export const addPatient = (patient) => (dispatch, getState) => {
 export const updatePatient = (patient) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         axios
-            .put(`/api/patients/${patient.id}/`, patient, Token.getTokenConfig(getState))
+            .put(`/api/patient/${patient.id}/`, patient, Token.getTokenConfig(getState))
             .then(response => {
                 dispatch({
                     type: UPDATE_PATIENT,
