@@ -49,7 +49,7 @@ class PatientList(generics.ListAPIView):
         return Response(serializer.data)
 
 
-class PatientCreate(APIView):
+class PatientCreate(generics.CreateAPIView):
     """
     List all patient, or create a new patient
     """

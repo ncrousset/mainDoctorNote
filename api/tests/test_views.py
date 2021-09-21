@@ -24,9 +24,22 @@ def create_patients_for_test(user):
         idd=random.randrange(1000000, 9999999),
         phone=faker.phone_number()[:12],
         sex=random.choice(['m', 'f', 'o']),
-        next_appointment=timezone.datetime(2050, 1, 30, 10, 0, 0),
         user_id=user
     )
+
+
+def client_local():
+
+    client = APIClient(enforce_csrf_checks=True)
+
+    response = client.post(reverse('login'), {
+        'username': 'testuser', 'password': 'test'
+    })
+
+    client.credentials(
+        HTTP_AUTHORIZATION='Token ' + response.data['token'])
+
+    return client
 
 
 class PatientListTest(TestCase):
@@ -39,14 +52,7 @@ class PatientListTest(TestCase):
             password='test'
         )
 
-        self.client = APIClient(enforce_csrf_checks=False)
-
-        response = self.client.post(reverse('login'), {
-            'username': 'testuser', 'password': 'test'
-        })
-
-        self.client.credentials(
-            HTTP_AUTHORIZATION='Token ' + response.data['token'])
+        self.client = client_local()
 
         self.patient = Patient.objects.create(
             first_name='Natanael',
@@ -57,7 +63,6 @@ class PatientListTest(TestCase):
             idd='545456',
             phone='5454545',
             sex='m',
-            next_appointment=timezone.datetime(2050, 1, 30, 10, 0, 0),
             user_id=self.user
         )
 
@@ -106,83 +111,85 @@ class PatientListTest(TestCase):
         response = self.client.get(reverse('patients') + '?p=1')
         self.assertEqual(response.status_code, 200)
 
-        data = response.json()
 
-        self.assertEqual(data[0]['first_name'], 'Pancho')
+class PatientCreateTest(TestCase):
+
+    def setUp(self):
+
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            email='testuser@gmail.com',
+            password='test'
+        )
+
+        self.client = client_local()
+
+    def test_user_can_create_patient(self):
+        data = {
+            'first_name': 'Pedro',
+            'last_name': 'Lopez',
+            'birth_date': '2001-02-15',
+            'email': 'estephany@gmail.com',
+            'insurance': '121542',
+            'idd': '45545',
+            'phone': '80954855',
+            'sex': 'm',
+        }
+
+        response = self.client.post(reverse('patient-create'), data)
+
+        self.assertEqual(response.status_code, 201)
 
 
-#     def test_user_can_create_a_patient(self):
-#         data = {
-#             'first_name': 'Pedro',
-#             'last_name': 'Lopez',
-#             'birth_date': '2001-02-15',
-#             'email': 'estephany@gmail.com',
-#             'insurance': '121542',
-#             'idd': '45545',
-#             'phone': '80954855',
-#             'sex': 'm',
-#             'next_appointment': '2021-11-20'
-#         }
+class PatientDetailTest(TestCase):
 
-#         response = self.client.post(reverse('patients'), data)
+    def setUp(self):
 
-#         self.assertEqual(response.status_code, 201)
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            email='testuser@gmail.com',
+            password='test'
+        )
 
+        self.client = client_local()
 
-# class PatientDetailTest(TestCase):
+        self.patient = Patient.objects.create(
+            first_name='Natanael',
+            last_name='Acosta',
+            birth_date='2021-05-18',
+            email='natanael926@gmail.com',
+            insurance='454555',
+            idd='545456',
+            phone='5454545',
+            sex='m',
+            user_id=self.user
+        )
 
-#     def setUp(self):
+    def test_user_can_see_detail_patient(self):
+        response = self.client.get(
+            reverse('patient', kwargs={"pk": self.patient.id})
+        )
 
-#         self.user = get_user_model().objects.create_user(
-#             username='testuser',
-#             email='testuser@gmail.com',
-#             password='test'
-#         )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['first_name'], 'Natanael')
+        self.assertEqual(response.data['last_name'], 'Acosta')
+        self.assertEqual(response.data['birth_date'], '2021-05-18')
 
-#         self.client = Client(enforce_csrf_checks=False)
-#         self.client.login(username='testuser', password='test')
+    def test_user_can_edit_patient(self):
+        data = {
+            'first_name': 'Pedro 2',
+            'last_name': 'Lopez',
+            'birth_date': '2001-02-15',
+            'email': 'estephany@gmail.com',
+            'insurance': '121542',
+            'idd': '45545',
+            'phone': '80954855',
+            'sex': 'm',
+        }
 
-#         self.patient = Patient.objects.create(
-#             first_name='Natanael',
-#             last_name='Acosta',
-#             birth_date='2021-05-18',
-#             email='natanael926@gmail.com',
-#             insurance='454555',
-#             idd='545456',
-#             phone='5454545',
-#             sex='m',
-#             next_appointment='2021-05-18',
-#             user_id=self.user
-#         )
+        response = self.client.put(reverse('patient', kwargs={"pk": self.patient.id}),
+                                   content_type=MULTIPART_CONTENT,
+                                   data=encode_multipart(BOUNDARY, data),)
 
-#     def test_user_can_see_detail_patient(self):
-#         response = self.client.get(
-#             reverse('patient', kwargs={"pk": self.patient.id})
-#         )
-
-#         self.assertEqual(response.status_code, 200)
-#         self.assertEqual(response.data['first_name'], 'Natanael')
-#         self.assertEqual(response.data['last_name'], 'Acosta')
-#         self.assertEqual(response.data['birth_date'], '2021-05-18')
-
-#     def test_user_can_edit_patient(self):
-
-#         data = {
-#             'first_name': 'Pedro 2',
-#             'last_name': 'Lopez',
-#             'birth_date': '2001-02-15',
-#             'email': 'estephany@gmail.com',
-#             'insurance': '121542',
-#             'idd': '45545',
-#             'phone': '80954855',
-#             'sex': 'm',
-#             'next_appointment': '2021-11-20'
-#         }
-
-#         url = '/api/patients/' + str(self.patient.id) + '/'
-#         response = self.client.put(url,
-#                                    content_type=MULTIPART_CONTENT,
-#                                    data=encode_multipart(BOUNDARY, data),)
-
-#         self.assertEqual(response.status_code, 200)
-#         self.assertEqual(response.data['first_name'], 'Pedro 2')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['first_name'], 'Pedro 2')
