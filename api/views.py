@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.postgres.search import SearchVector, SearchQuery
 from django.core.paginator import Paginator
+from django.db.models import Q
 
 # from django.views.decorators.csrf import csrf_exempt
 # from braces.views import CsrfExemptMixin
@@ -31,7 +32,8 @@ class PatientList(generics.ListAPIView):
             patients = Patient.objects.annotate(
                 search=SearchVector(
                     "first_name", "last_name", "insurance", "idd")
-            ).filter(search__icontains=SearchQuery(search))
+            ).filter(
+                Q(search=SearchQuery(search)) | Q(search__icontains=search))
 
         else:
             patients = Patient.objects.all()
