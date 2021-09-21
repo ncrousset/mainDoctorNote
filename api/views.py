@@ -13,8 +13,35 @@ from django.db.models import Q
 # from django.views.decorators.csrf import csrf_exempt
 # from braces.views import CsrfExemptMixin
 
-from django.http import Http404
+from django.http import Http404, HttpResponse
 import datetime
+
+from faker import Faker
+from django.contrib.auth.models import User
+import random
+
+
+def faker_patients_for_test(self):
+    faker = Faker()
+
+    user = User.objects.last()
+
+    for _ in range(100):
+
+        Patient.objects.create(
+            first_name=faker.first_name(),
+            last_name=faker.last_name(),
+            birth_date=faker.date_of_birth(
+                tzinfo=None, minimum_age=0, maximum_age=80),
+            email=faker.email(),
+            insurance=random.randrange(1000000, 9999999),
+            idd=random.randrange(1000000, 9999999),
+            phone=faker.phone_number()[:12],
+            sex=random.choice(['m', 'f', 'o']),
+            user_id=user
+        )
+
+    return HttpResponse("ok")
 
 
 class PatientList(generics.ListAPIView):
