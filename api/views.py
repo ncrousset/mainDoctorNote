@@ -6,8 +6,8 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery
+from django.core.paginator import Paginator
 
 # from django.views.decorators.csrf import csrf_exempt
 # from braces.views import CsrfExemptMixin
@@ -17,24 +17,33 @@ import datetime
 
 
 class PatientList(generics.ListAPIView):
+    LIMIT_PAGE = 10
     serializer_class = PatientSerialize
     permission_classes = [
         permissions.IsAuthenticated
     ]
 
-    def list(self, request, search):
-        # patients = Patient.objects.filter(deleted=False).filter(
-        #     Q(first_name__icontains=search) |
-        #     Q(last_name__icontains=search) |
-        #     Q(idd__icontains=search) |
-        #     Q(insurance__icontains=search)
-        # )
+    def list(self, request):
 
-        patients = Patient.objects.annotate(
-            search=SearchVector("first_name", "last_name")
-        ).filter(search=SearchQuery(search))
+        if 'q' in request.GET and len(str(request.GET['q']).strip()) > 0:
+            search = request.GET['q']
 
-        serializer = PatientSerialize(patients, many=True)
+            patients = Patient.objects.annotate(
+                search=SearchVector(
+                    "first_name", "last_name", "insurance", "idd")
+            ).filter(search__icontains=SearchQuery(search))
+
+        else:
+            patients = Patient.objects.all()
+
+        page = 1
+        if 'p' in request.GET and type(request.GET['p']) == type(0):
+            page = int(request.GET['p'])
+
+        paginator = Paginator(patients, self.LIMIT_PAGE)
+        page_patients = paginator.get_page(page)
+
+        serializer = PatientSerialize(page_patients, many=True)
         return Response(serializer.data)
 
 

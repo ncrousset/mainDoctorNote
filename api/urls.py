@@ -4,7 +4,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     # path('patients/', views.PatientCreate.as_view(), name='patients-create'),
-    re_path(r'^patients/(?P<search>\D+)/$',
+    re_path(r'^patients/$',
             views.PatientList.as_view(), name='patients'),
     # path('patients/', views.PatientList.as_view(), name='patients'),
     path('patient/<int:pk>/', views.PatientDetail.as_view(), name='patient'),
