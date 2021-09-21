@@ -8,21 +8,28 @@ import {
     ADD_PATIENT,
     GET_ERRORS,
     GET_PATIENT,
-    UPDATE_PATIENT
+    UPDATE_PATIENT,
+    GET_PAGINATOR_PATIENTS,
 } from './types';
 
 import axios from 'axios';
 
 //GET PATIENTS
 // /api/patients
-export const getPatients = () => (dispatch, getState) => {
+export const getPatients = (page = 1) => (dispatch, getState) => {
 
-    axios.get('/api/patients/', Token.getTokenConfig(getState))
+    axios.get(`/api/patients/?p=${page}`, Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: GET_PATIENTS,
-                payload: response.data
+                payload: response.data.data
             });
+
+            dispatch({
+                type: GET_PAGINATOR_PATIENTS,
+                payload: { 'page': response.data.page, 'total': response.data.total }
+            });
+
         }).catch(error => {
             dispatch(returnErrors(error.response.data.detail, error.response.status))
             dispatch({ type: GET_ERRORS })

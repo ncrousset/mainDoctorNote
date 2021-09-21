@@ -8,9 +8,9 @@ const Main = (props) => {
         <Fragment>
             <div className="flex flex-row">
                 <Sidebar />
-                <div className="bg-gray-100 w-auto h-screen w-screen">
+                <div className="bg-gray-100 w-auto h-screen w-screen flex flex-col">
                     <Header />
-                    <div className="container">
+                    <div className="container w-auto flex-grow h-screen">
                         {props.children}
                     </div>
                 </div>

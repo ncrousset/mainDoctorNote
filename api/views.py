@@ -48,7 +48,14 @@ class PatientList(generics.ListAPIView):
         page_patients = paginator.get_page(page)
 
         serializer = PatientSerialize(page_patients, many=True)
-        return Response(serializer.data)
+
+        data_response = {
+            'page': page,
+            'total': len(patients),
+            'data': serializer.data
+        }
+
+        return Response(data_response)
 
 
 class PatientCreate(generics.CreateAPIView):
