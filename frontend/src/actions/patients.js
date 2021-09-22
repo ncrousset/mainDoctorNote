@@ -1,6 +1,7 @@
 import { returnErrors } from "./messages";
 import { Token } from "../common/Token"
 import { Redirect } from "react-router-dom";
+// import store from '../store'
 
 import {
     GET_PATIENTS,
@@ -10,6 +11,7 @@ import {
     GET_PATIENT,
     UPDATE_PATIENT,
     GET_PAGINATOR_PATIENTS,
+    SEARCH_PATIENTS,
 } from './types';
 
 import axios from 'axios';
@@ -18,7 +20,13 @@ import axios from 'axios';
 // /api/patients
 export const getPatients = (page = 1) => (dispatch, getState) => {
 
-    axios.get(`/api/patients/?p=${page}`, Token.getTokenConfig(getState))
+    let url = `/api/patients/?p=${page}`
+
+    if (getState().patients.search.length > 1) {
+        url += `&q=${getState().patients.search}`
+    }
+
+    axios.get(url, Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: GET_PATIENTS,
@@ -115,7 +123,6 @@ export const updatePatient = (patient) => (dispatch, getState) => {
                 resolve(response.data)
 
             }).catch(error => {
-                console.log(error)
                 const errors = {
                     type: 'str',
                     msg: error.response.data,
@@ -132,3 +139,10 @@ export const updatePatient = (patient) => (dispatch, getState) => {
     })
 }
 
+// SEARCH PATIENT 
+export const searchPatient = (search) => dispatch => {
+    dispatch({
+        type: SEARCH_PATIENTS,
+        payload: search
+    });
+}

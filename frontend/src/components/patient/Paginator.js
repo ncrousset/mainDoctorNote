@@ -30,11 +30,6 @@ export class Paginator extends Component {
 
         return (
             <div className="absolute bottom-0 right-0 px-6">
-
-                {1 == 2 &&
-                    <h1>Hola</h1>
-                }
-
                 <span>Total: {this.props.pagination.total}</span>,
                 <span> Page: {this.props.pagination.page}</span>
                 <span className="text-greed-700 mx-1">Patient of(

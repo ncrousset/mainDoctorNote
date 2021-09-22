@@ -4,10 +4,14 @@ import {
     ADD_PATIENT,
     UPDATE_PATIENT,
     GET_PAGINATOR_PATIENTS,
+    SEARCH_PATIENTS,
 } from '../actions/types'
 
 const initialState = {
-    patients: []
+    patients: [],
+    search: '',
+    paginator: []
+
 }
 
 export default function (state = initialState, action) {
@@ -29,6 +33,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 patients: [...state.patients, action.payload]
+            }
+        case SEARCH_PATIENTS:
+            return {
+                ...state,
+                search: action.payload
             }
         case GET_PAGINATOR_PATIENTS:
             const LIMIT_PAGE = 18
