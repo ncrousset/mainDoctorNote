@@ -8,8 +8,6 @@ export class Paginator extends Component {
 
     constructor() {
         super()
-
-
     }
 
     static propTypes = {

@@ -45,9 +45,14 @@ export default function (state = initialState, action) {
             const end_page = (action.payload.page * LIMIT_PAGE > action.payload.total)
                 ? action.payload.total : action.payload.page * LIMIT_PAGE
 
+            let start_page = 0
+            if (action.payload.total > 0) {
+                start_page = action.payload.page * LIMIT_PAGE - LIMIT_PAGE + 1
+            }
+
             const paginator = {
                 ...action.payload,
-                start_page: action.payload.page * LIMIT_PAGE - LIMIT_PAGE + 1,
+                start_page: start_page,
                 end_page: end_page
             }
 

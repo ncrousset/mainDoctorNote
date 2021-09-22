@@ -60,16 +60,16 @@ export class PatientListPage extends Component {
 
                                 <CardPatient patient={patient} onDelete={this.props.deletePatient} />
                             ))}
+
+                            {this.props.patients.length == 0 &&
+                                <div>No patients found..</div>
+                            }
+
                         </div>
-
-
                     </div>
                     {this.props.patients.length > 100}
 
-
                     <Paginator pagination={this.props.pagination != null && this.props.pagination} />
-
-
                 </section>
                 {this.state.show && <ModalForm onClose={() => this.hideCreateForm()} />}
 
