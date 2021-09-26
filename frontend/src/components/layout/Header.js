@@ -59,14 +59,6 @@ export class Header extends Component {
                                 </button>
                             </div>
                         </div>
-
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <a href="#"
-                                    onClick={this.props.logout}
-                                    className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Logout</a>
-                            </div>
-                        </div>
                     </div>
                 </nav>
             </header >

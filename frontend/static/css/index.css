@@ -27,6 +27,7 @@ html, body {
 }
 
 .active {
-    --tw-bg-opacity: 1;
-    background-color: rgba(52, 211, 153, var(--tw-bg-opacity));
+    --tw-opacity: 1;
+    background-color: rgba(253, 230, 138, var(--tw-opacity));
+    color: rgba(55, 65, 81, var(--tw-opacity)) !important;
 }
