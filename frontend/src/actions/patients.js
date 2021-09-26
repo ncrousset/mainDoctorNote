@@ -12,6 +12,7 @@ import {
     UPDATE_PATIENT,
     GET_PAGINATOR_PATIENTS,
     SEARCH_PATIENTS,
+    GET_SESSION_PATIENT,
 } from './types';
 
 import axios from 'axios';
@@ -144,5 +145,13 @@ export const searchPatient = (search) => dispatch => {
     dispatch({
         type: SEARCH_PATIENTS,
         payload: search
+    });
+}
+
+// SET_SESSION_PATIENT
+export const setSessionPatient = (session) => (dispatch) => {
+    dispatch({
+        type: GET_SESSION_PATIENT,
+        payload: session
     });
 }
