@@ -5,26 +5,25 @@ import Footer from './Footer'
 
 const Main = (props) => {
     return (
-        <Fragment>
+        <div className="body-app">
 
+
+            <Sidebar />
+
+            <div>main</div>
+
+            {/* <Sidebar /> */}
+            {/* 
             <div class="bg-blue-500 min-w-screen min-h-screen flex flex-row">
                 <div class="bg-red-500 w-3/12 inline-block ">
                     <Sidebar />
-                    {/* <div class="fixed bg-yellow-500 h-screen w-64">
-                        <div> Lugar 1 </div>
-                        <div> Lugar 2 </div>
-                    </div> */}
                 </div>
 
                 <div class="bg-blue-500 w-auto flex-grow w-9/12">
                     <Header />
-
-
                     {props.children}
-
-
                 </div>
-            </div>
+            </div> */}
 
 
             {/* <div className="flex bg-red-500 justify-start">
@@ -48,7 +47,7 @@ const Main = (props) => {
                     </div>
                 </div> */}
             {/* </div> */}
-        </Fragment>
+        </div>
     )
 }
 
