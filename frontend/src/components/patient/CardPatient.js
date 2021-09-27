@@ -11,7 +11,7 @@ const CardPatient = ({ patient, onDelete }) => {
                 <div className="h-full flex relative items-center border-gray-200 border p-4 rounded-lg bg-white">
 
                     <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
-                        src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50" />
+                        src={ `https://randomuser.me/api/portraits/${ (patient.sex == 'm') ? 'men' : 'women' }/${patient.id}.jpg`} />
                     {/* https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50 */}
                     <div className="flex-grow">
                         <h2 className="text-gray-900 title-font font-medium">{patient.full_name}</h2>
