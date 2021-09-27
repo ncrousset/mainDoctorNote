@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from api.models import Patient
+from api.models import Patient, Background
 from django.urls import reverse
 
 
@@ -50,3 +50,41 @@ class PatientTest(TestCase):
     def test_get_full_name(self):
         self.assertEqual(
             f'{self.patient.first_name} {self.patient.last_name}', self.patient.full_name)
+
+
+class BackgroundTest(TestCase):
+    def setUp(self):
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            email='testuser@gmail.com',
+            password='test'
+        )
+
+        Patient.objects.create(
+            first_name='Natanael',
+            last_name='Acosta',
+            birth_date='2021-05-18',
+            email='natanael926@gmail.com',
+            insurance='454555',
+            idd='545456',
+            phone='5454545',
+            sex='m',
+            next_appointment='2021-05-18',
+            user_id=self.user
+        )
+    
+        Background.objects.create(
+            title='Background title',
+            content='Hola ',
+            patient=Patient.objects.last()
+        )
+
+        self.background = Background.objects.last()
+
+    def test_object_name_id_title(self):
+        self.assertEquals(self.background.title, 'Background title')
+
+    # def test_get_absolute_url(self):
+    #     self.assertEqual(self.background.get_absolute_url(),
+    #                      reverse('patient-background', kwargs={"pk": self.background.id}))
+

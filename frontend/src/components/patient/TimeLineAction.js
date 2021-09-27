@@ -4,7 +4,7 @@ export class TimeLineAction extends Component {
     render() {
         return (
             <div className="container mx-auto">
-                <div className="relative wrap overflow-hidden p-10 ">
+                <div className="relative wrap overflow-hidden px-10 py-0 ">
                     <div className="border-2-2 absolute border-opacity-20 border-gray-700 h-full border left-1/2"></div>
 
                     <div className="mb-8 flex justify-between items-center w-full right-timeline">

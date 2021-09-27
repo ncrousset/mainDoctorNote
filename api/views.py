@@ -1,7 +1,7 @@
 from django.db.models.query import QuerySet
 from rest_framework import viewsets, status, permissions
-from .serializers import PatientSerialize
-from .models import Patient
+from .serializers import PatientSerialize, BackgroundSerialize
+from .models import Patient, Background
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -52,7 +52,6 @@ class PatientList(generics.ListAPIView):
     ]
 
     def list(self, request):
-
         if 'q' in request.GET and len(str(request.GET['q']).strip()) > 0:
             search = request.GET['q']
 
@@ -135,6 +134,66 @@ class PatientDetail(APIView):
             patient.deleted = True
             patient.deleted_date = datetime.datetime.now()
             patient.save()
+        except ValueError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class BackgroundListCreate(APIView):
+    serializer_class = BackgroundSerialize
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def get(self, request, pk):
+
+        background = Background.objects.all()
+        serializer = BackgroundSerialize(background, many=True)
+
+        data_response = {
+            'total': len(background),
+            'data': serializer.data
+        }
+
+        return Response(data_response)
+
+    def post(self, request, pk): 
+        serializer = BackgroundSerialize(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BackgroundDetail(APIView):
+    serializer_class = BackgroundSerialize
+
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    def get_object(self, pk):
+        try:
+            return Background.objects.get(id=pk)
+        except Patient.DoesNotExist:
+            raise Http404
+
+    def put(self, request, pk, format=None):
+        background = self.get_object(pk)
+        serializer = BackgroundSerialize(background, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        try:
+            background = self.get_object(pk)
+            background.deleted = True
+            background.deleted_date = datetime.datetime.now()
+            background.save()
         except ValueError:
             return Response(status=status.HTTP_400_BAD_REQUEST)
 

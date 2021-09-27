@@ -34,7 +34,7 @@ export class NavActionPatient extends Component {
                     </div>
                 </div>
                 <div className="flex flex-row-reverse w-full align-right ">
-                    <button className="flex flex-row  content-center py-2 px-3 mt-5 mr-2 text-sm text-white font-semibold bg-green-500 rounded-md transform hover:bg-green-600 translate-x-2 -translate-y-3 shadow-xl">
+                    <button className="flex flex-row content-center py-2 px-3 mt-5 mr-2 text-sm text-white font-semibold bg-green-500 rounded-md transform hover:bg-green-600 translate-x-2 -translate-y-3 shadow-xl">
                         <BiPlusMedical className="mt-1 mr-1" />
                         Add {this.sessions[this.props.session] }
                     </button>
