@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { getPatient } from '../../actions/patients'
+import { getBackground } from '../../actions/patient'
 
 import Main from '../layout/Main'
 import CardPatientDetail from './CardPatientDetail'
@@ -35,12 +36,14 @@ export class PatientDetailPage extends Component {
 
     static propTypes = {
         patient: PropTypes.object.isRequired,
-        getPatient: PropTypes.func.isRequired
+        getPatient: PropTypes.func.isRequired,
+        getBackground: PropTypes.func,
     }
 
     componentDidMount() {
         const id = parseInt(this.props.match.params.id)
         this.props.getPatient(id)
+        this.props.getBackground(id)
     }
 
 
@@ -60,7 +63,7 @@ export class PatientDetailPage extends Component {
 
                     <NavActionPatient />
 
-                    <TimeLineAction />
+                    {this.props.background != null && <TimeLineAction data={this.props.background}/>}
 
                 </section>
 
@@ -72,7 +75,8 @@ export class PatientDetailPage extends Component {
 }
 
 const mapStateToProps = state => ({
-    patient: state.patient.patient
+    patient: state.patient.patient,
+    background: state.patient.background
 });
 
-export default connect(mapStateToProps, { getPatient })(PatientDetailPage)
+export default connect(mapStateToProps, { getPatient, getBackground })(PatientDetailPage)

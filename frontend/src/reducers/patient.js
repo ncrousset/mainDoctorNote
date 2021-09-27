@@ -1,11 +1,13 @@
 import {
     GET_PATIENT,
-    GET_SESSION_PATIENT
+    GET_SESSION_PATIENT,
+    GET_BACKGROUND,
 } from '../actions/types'
 
 const initialState = {
     patient: null,
-    session: 'background'
+    session: 'background',
+    background: [],
 }
 
 export default function (state = initialState, action) {
@@ -19,6 +21,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 session: action.payload
+            };
+        case GET_BACKGROUND:
+            return {
+                ...state,
+                background: action.payload,
             };
         default:
             return state;

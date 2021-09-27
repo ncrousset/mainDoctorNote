@@ -15,7 +15,6 @@ export class NavActionPatient extends Component {
         'treatments': 'Treatments',
     }
     
-
     onClickSession = (session) => {
         this.props.setSessionPatient(session)
     }
