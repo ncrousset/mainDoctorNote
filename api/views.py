@@ -151,7 +151,17 @@ class BackgroundListCreate(APIView):
 
     def get(self, request, pk):
 
-        background = Background.objects.all()
+        """
+        If patient was deleted, you can see background 
+        """
+        if Patient.objects.get(pk=pk).deleted:
+            return Response("the patient was not found", 
+                status=status.HTTP_400_BAD_REQUEST)
+
+
+        background = Background.objects.all().filter(
+            deleted=False, patient=pk).order_by('-date')
+
         serializer = BackgroundSerialize(background, many=True)
 
         data_response = {
@@ -161,7 +171,14 @@ class BackgroundListCreate(APIView):
 
         return Response(data_response)
 
-    def post(self, request, pk):     
+    def post(self, request, pk):
+        """
+        If patient was deleted, you can see background 
+        """
+        if Patient.objects.get(pk=pk).deleted:
+            return Response("the patient was not found", 
+                status=status.HTTP_400_BAD_REQUEST)
+
         data = OrderedDict()
         data.update(request.data)
         data['patient'] = pk
