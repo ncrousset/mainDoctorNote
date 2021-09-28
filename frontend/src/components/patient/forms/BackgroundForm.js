@@ -48,7 +48,7 @@ export class BackgroundForm extends Component {
                             <label className="text-gray-800 font-semibold" htmlFor="date">Date</label>
                             <input required onChange={this.onChange}  className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none 
-                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="text" name="date" id="date" />
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="month" name="date" id="date" />
                         </div>
                     </div>
 
