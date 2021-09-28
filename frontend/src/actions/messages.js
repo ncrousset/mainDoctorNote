@@ -7,3 +7,4 @@ export const returnErrors = (msg, status, type) => {
         payload: { msg, status, type },
     };
 };
+

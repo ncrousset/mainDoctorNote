@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 
 class Patient(models.Model):
@@ -55,7 +56,17 @@ class Patient(models.Model):
 class Background(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, null=True)
-    date = models.CharField(max_length=10, blank=True, null=True)
+    date = models.CharField( max_length=10,
+        blank=True, null=True,
+        validators=[
+            RegexValidator(
+                regex='^(\d{4}\-\d{2})|\d{4}$',
+                message='The date format is yyyy-mm or yyyy',
+                code='invalid_date'
+            )
+        ]
+    )
+
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
    
     deleted = models.BooleanField(default=False, blank=True, null=True)
@@ -66,5 +77,5 @@ class Background(models.Model):
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse("patient-background", kwargs={"pk": self.pk})
+    def get_absolute_url(self):
+        return reverse("background", kwargs={"pk": self.pk})
