@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 import Main from "../layout/Main";
 import CardPatient from "./CardPatient";
-import ModalForm from "./ModalForm";
+import ModalPatientForm from "./ModalPatientForm";
 import Paginator from "./Paginator";
 
 
@@ -71,7 +71,7 @@ export class PatientListPage extends Component {
 
                     <Paginator pagination={this.props.pagination != null && this.props.pagination} />
                 </section>
-                {this.state.show && <ModalForm onClose={() => this.hideCreateForm()} />}
+                {this.state.show && <ModalPatientForm onClose={() => this.hideCreateForm()} />}
 
             </Main >
         )

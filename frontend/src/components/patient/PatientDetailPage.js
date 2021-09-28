@@ -7,7 +7,7 @@ import { getBackground } from '../../actions/patient'
 
 import Main from '../layout/Main'
 import CardPatientDetail from './CardPatientDetail'
-import ModalForm from './ModalForm'
+import ModalPatientForm from './ModalPatientForm'
 import NavActionPatient from './NavActionPatient'
 import TimeLineAction from './TimeLineAction'
 
@@ -67,7 +67,7 @@ export class PatientDetailPage extends Component {
 
                 </section>
 
-                {this.state.show && <ModalForm onClose={() => this.hideModalForm()} patient={this.props.patient} title="Edit patient" edit={true} />}
+                {this.state.show && <ModalPatientForm onClose={() => this.hideModalForm()} patient={this.props.patient} title="Edit patient" edit={true} />}
 
             </Main>
         )

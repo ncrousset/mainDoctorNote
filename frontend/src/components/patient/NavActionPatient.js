@@ -3,10 +3,31 @@ import { connect } from 'react-redux'
 
 import {BiPlusMedical} from 'react-icons/bi'
 
+import ModalFormAction from './ModalFormAction'
+
 import { setSessionPatient } from '../../actions/patients'
 
 
 export class NavActionPatient extends Component {
+
+    constructor() {
+        super()
+
+        this.state = {
+            show: false
+        }
+
+        this.showModalForm = this.showModalForm.bind(this)
+        this.hideModalForm = this.hideModalForm.bind(this)
+    }
+
+    showModalForm = () => {
+        this.setState({ show: true })
+    }
+
+    hideModalForm = () => {
+        this.setState({ show: false })
+    }
 
     sessions = {
         'background': 'Background',
@@ -33,11 +54,14 @@ export class NavActionPatient extends Component {
                     </div>
                 </div>
                 <div className="flex flex-row-reverse w-full align-right ">
-                    <button className="flex flex-row content-center py-2 px-3 mt-5 mr-2 text-sm text-white font-semibold bg-green-500 rounded-md transform hover:bg-green-600 translate-x-2 -translate-y-3 shadow-xl">
+                    <button onClick={() => this.showModalForm()} className="flex flex-row content-center py-2 px-3 mt-5 mr-2 text-sm text-white font-semibold bg-green-500 rounded-md transform hover:bg-green-600 translate-x-2 -translate-y-3 shadow-xl">
                         <BiPlusMedical className="mt-1 mr-1" />
                         Add {this.sessions[this.props.session] }
                     </button>
                 </div>
+
+                {this.state.show && <ModalFormAction onClose={() => this. hideModalForm ()} />}
+
             </div>
         )
     }
