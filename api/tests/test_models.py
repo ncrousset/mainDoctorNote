@@ -84,7 +84,6 @@ class BackgroundTest(TestCase):
     def test_object_name_id_title(self):
         self.assertEquals(self.background.title, 'Background title')
 
-    # def test_get_absolute_url(self):
-    #     self.assertEqual(self.background.get_absolute_url(),
-    #                      reverse('patient-background', kwargs={"pk": self.background.id}))
-
+    def test_get_absolute_url(self):
+        self.assertEqual(self.background.get_absolute_url(), 
+        '/api/patient/background/' + str(self.background.id))
