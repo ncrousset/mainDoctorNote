@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
-import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import PropTypes from "prop-types"
+
+import { addBackground } from '../../../actions/patient';
+
 
 export class BackgroundForm extends Component {
 
@@ -11,6 +15,18 @@ export class BackgroundForm extends Component {
 
     static propTypes = {
         onClose: PropTypes.func.isRequired,
+        addBackground: PropTypes.func.isRequired
+    }
+
+    onSubmit = event => {
+        event.preventDefault()
+        this.props.addBackground(this.props.patient.id, this.state)
+            .then((response) => {
+                this.props.onClose()
+            })
+            .catch(error => {
+                console.log('error')
+            })
     }
 
     onChange = event => this.setState({
@@ -19,7 +35,7 @@ export class BackgroundForm extends Component {
 
     render() {
         return (
-            <form action=''>
+            <form action='' onSubmit={this.onSubmit}>
                 <div className="flex flex-col">
                     <div className="flex justify-between py-2">
                         <div className="px-1 w-1/2">
@@ -48,6 +64,7 @@ export class BackgroundForm extends Component {
                 <div className="flex flex-row-reverse w-full py-2 ml-auto border-t right-0">
                     <button
                         type="submit"
+
                         className="mx-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                         {/* {(this.props.edit) ? 'Edit' : 'Add'} */} Add
                     </button>
@@ -62,4 +79,8 @@ export class BackgroundForm extends Component {
     }
 }
 
-export default BackgroundForm
+const mapStateToProps = state => ({
+    patient: state.patient.patient
+});
+
+export default connect(mapStateToProps, {addBackground})(BackgroundForm)

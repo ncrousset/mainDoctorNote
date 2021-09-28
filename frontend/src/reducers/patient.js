@@ -2,6 +2,7 @@ import {
     GET_PATIENT,
     GET_SESSION_PATIENT,
     GET_BACKGROUND,
+    ADD_BACKGROUND
 } from '../actions/types'
 
 const initialState = {
@@ -26,6 +27,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 background: action.payload,
+            };
+        case ADD_BACKGROUND:
+                return {
+                    ...state,
+                    background: [...state.background, action.payload]
             };
         default:
             return state;

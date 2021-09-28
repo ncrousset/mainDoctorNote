@@ -55,7 +55,7 @@ class Patient(models.Model):
 class Background(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, null=True)
-    date = models.DateField(blank=True, null=True)
+    date = models.TextField(max_length=10, blank=True, null=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
    
     deleted = models.BooleanField(default=False, blank=True, null=True)

@@ -7,8 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Provider } from 'react-redux';
 import store from '../store';
 
-import { ToastContainer } from 'react-toastify';
-import Alerts from "./layout/Alerts";
+
 
 import { loadUser } from "../actions/auth"
 
@@ -24,8 +23,8 @@ export default class App extends Component {
     render() {
         return <div>
             <Provider store={store}>
-                <Alerts />
-                <ToastContainer />
+               
+                {/* <ToastContainer /> */}
                 <HomePage />
             </Provider>
         </div>;

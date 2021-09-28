@@ -1,19 +1,24 @@
 import React, { Fragment } from 'react'
 import Sidebar from './Sidebar'
 import Header from './Header'
-import Footer from './Footer'
+import Alerts from './Alerts'
 
 const Main = (props) => {
     return (
-        <div className="body-app">
-            <Sidebar />
-            <div>
-                <Header />
-                <div className="container">
-                    {props.children}
+        <Fragment>
+            <Alerts />
+
+            <div className="body-app">
+
+                <Sidebar />
+                <div>
+                    <Header />
+                    <div className="container">
+                        {props.children}
+                    </div>
                 </div>
             </div>
-        </div>
+        </Fragment>
     )
 }
 

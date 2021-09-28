@@ -4,13 +4,15 @@ import axios from 'axios'
 
 import {
     GET_BACKGROUND,
-    GET_ERRORS
+    ADD_BACKGROUND,
+    GET_ERRORS,
+    GET_ALERT
 } from './types';
 
-// GET Baground
-export const getBackground = (patient_id) => (dispatch, getState) => {
+// GET Background
+export const getBackground = (patient) => (dispatch, getState) => {
 
-    axios.get(`/api/patient/${patient_id}/background`, Token.getTokenConfig(getState))
+    axios.get(`/api/patient/${patient}/background`, Token.getTokenConfig(getState))
         .then(response => {
             dispatch({
                 type: GET_BACKGROUND,
@@ -20,4 +22,46 @@ export const getBackground = (patient_id) => (dispatch, getState) => {
             // dispatch(returnErrors('error', 45))
             // dispatch({ type: GET_ERRORS })
         })
+}
+
+//Add Background Estoy trabajando AQUI
+export const addBackground = (patient, data) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`/api/patient/${patient}/background`, data, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: ADD_BACKGROUND,
+                    payload: response.data
+                });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Background Create",
+                    status: response.status
+                }
+
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
+                resolve(response.data)
+
+            }).catch(error => {
+             
+                const errors = {
+                    type: 'str',
+                    msg:  error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
 }

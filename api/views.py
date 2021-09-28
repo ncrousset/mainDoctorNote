@@ -1,3 +1,4 @@
+from typing import OrderedDict
 from django.db.models.query import QuerySet
 from rest_framework import viewsets, status, permissions
 from .serializers import PatientSerialize, BackgroundSerialize
@@ -19,6 +20,8 @@ import datetime
 from faker import Faker
 from django.contrib.auth.models import User
 import random
+
+from collections import OrderedDict 
 
 
 def faker_patients_for_test(self):
@@ -158,8 +161,12 @@ class BackgroundListCreate(APIView):
 
         return Response(data_response)
 
-    def post(self, request, pk): 
-        serializer = BackgroundSerialize(data=request.data)
+    def post(self, request, pk):     
+        data = OrderedDict()
+        data.update(request.data)
+        data['patient'] = pk
+    
+        serializer = BackgroundSerialize(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
