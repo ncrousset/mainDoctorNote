@@ -5,8 +5,6 @@ from .models import Patient, Background
 from django.contrib.auth.models import User
 
 
-
-
 class BackgroundSerialize(serializers.ModelSerializer):
     class Meta:
         model = Background

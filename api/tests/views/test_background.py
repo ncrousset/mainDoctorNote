@@ -120,6 +120,22 @@ class BackgroundListCreateTest(TestCase):
 
         self.assertEqual(response.status_code, 400)
 
+    # def test_validate_format_of_date(self):
+    #     """ The validate format are YYYY-MM and YYYY"""
+    #     url = '/api/patient/' + str(self.patient.id ) + '/background'
+
+    #     data = {
+    #         'title': 'Pedro',
+    #         'content': 'Lopez',
+    #         'date': '2001-02-15'
+    #     }
+
+    #     response = self.client.post(url, data)
+
+    #     self.assertEqual(response.status_code, 201)
+        
+    #     pass
+
 class BackgroundDetailTest(TestCase):
     
     def setUp(self):
@@ -168,15 +184,12 @@ class BackgroundDetailTest(TestCase):
 
     def test_user_can_update_background(self):
 
-        data = {
-            'title': 'Test Update',
-            'content': 'Lopez',
-            'date': '2001-02-15'
-        }
+        background = create_background(create_patient(self.user))
 
-        response = self.client.put(self.background.get_absolute_url(), data)
+        data = {'title': 'Test Update', 'content': 'Lopez', 'date': '2001-02-15'}
+        response = self.client.put(background.get_absolute_url(), data)
 
-        background = Background.objects.get(pk=self.background.id)
+        background = Background.objects.get(pk=background.id)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(background.title, 'Test Update')
@@ -233,3 +246,5 @@ class BackgroundDetailTest(TestCase):
         response = self.client.delete(background.get_absolute_url())
 
         self.assertEqual(response.status_code, 400)
+
+    
