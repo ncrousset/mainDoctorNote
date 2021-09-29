@@ -1,3 +1,4 @@
+from api.views import background
 from datetime import date
 from django.http import response
 from django.test import TestCase, Client
@@ -27,10 +28,19 @@ def client_local():
     return client
 
 
+def create_patient(user, deleted=False):
+     return Patient.objects.create(
+            first_name='Natanael', last_name='Acosta', 
+            sex='m', user_id=user, deleted=deleted)
+
+def create_background(patient, deleted=False, date='2019-12'):
+    return Background.objects.create(
+            title= 'title', content='content',
+            date=date, patient=patient, deleted=deleted)
+
 class BackgroundListCreateTest(TestCase):
     
     def setUp(self):
-
         self.user = get_user_model().objects.create_user(
             username='testuser',
             email='testuser@gmail.com',
@@ -39,66 +49,31 @@ class BackgroundListCreateTest(TestCase):
 
         self.client = client_local()
 
-        self.patient = Patient.objects.create(
-            first_name='Natanael',
-            last_name='Acosta',
-            birth_date='2021-05-18',
-            email='natanael926@gmail.com',
-            insurance='454555',
-            idd='545456',
-            phone='5454545',
-            sex='m',
-            user_id=self.user
-        )
-
-        Background.objects.create(
-            title='test',
-            content='test',
-            date='1922-12',
-            patient=self.patient
-        )
+        self.patient = create_patient(self.user)
+        create_background(self.patient)
 
     def test_user_get_list_background(self):
-
         url = '/api/patient/' + str(self.patient.id ) + '/background'
         response = self.client.get(url)
 
         data = response.json()
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(data['data'][0]['title'], 'test')
+        self.assertEqual(data['data'][0]['title'], 'title')
 
     def test_the_list_background_order_by_date(self):
-
-        Background.objects.create(
-            title='test last',
-            content='test',
-            date='2015-12',
-            patient=self.patient
-        )
+        create_background(self.patient, date='2020-12')
 
         url = '/api/patient/' + str(self.patient.id ) + '/background'
         response = self.client.get(url)
 
         data = response.json()
 
-        self.assertEqual(data['data'][0]['title'], 'test last')
+        self.assertEqual(data['data'][0]['date'], '2020-12')
 
     def test_user_cannot_see_background_on_patient_was_deleted(self):
-        patient = Patient.objects.create(
-            first_name='Natanael',
-            last_name='Acosta',
-            birth_date='2021-05-18',
-            email='natanael926@gmail.com',
-            insurance='454555',
-            idd='545456',
-            phone='5454545',
-            sex='m',
-            deleted=True,
-            user_id=self.user
-        )
-
-        Background.objects.create(title='test', content='test', date='2015-12', patient=patient)
+        patient = create_patient(self.user, True)
+        create_background(patient)
 
         url = '/api/patient/' + str(patient.id ) + '/background'
         response = self.client.get(url)
@@ -106,11 +81,8 @@ class BackgroundListCreateTest(TestCase):
         self.assertEqual(response.status_code, 400)
 
     def test_user_cannot_see_background_deleted(self):
-        patient = Patient.objects.create(
-            first_name='Natanael', last_name='Acosta', sex='m', user_id=self.user
-        )
-
-        Background.objects.create(title='test', content='test', date='2015-12', deleted=True, patient=patient)
+        patient = create_patient(self.user)
+        create_background(patient, True)
 
         url = '/api/patient/' + str(patient.id ) + '/background'
         response = self.client.get(url)
@@ -134,10 +106,7 @@ class BackgroundListCreateTest(TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_if_patient_was_deleted_cannot_add_background(self):
-        patient = Patient.objects.create(
-            first_name='Natanael', last_name='Acosta', 
-            sex='m', user_id=self.user, deleted=True
-        )
+        patient = create_patient(self.user, True)
 
         url = '/api/patient/' + str(patient.id ) + '/background'
 
@@ -229,5 +198,38 @@ class BackgroundDetailTest(TestCase):
 
     def test_only_owner_user_of_patient_can_delete(self):
         response = self.client.delete(self.other_background.get_absolute_url())
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_if_patient_was_deleted_cannot_update_background(self):
+        background = create_background(create_patient(self.user, True))
+
+        data = {
+            'title': 'Test Update',
+            'content': 'Lopez',
+            'date': '2001-02-15'
+        }
+
+        response = self.client.put(background.get_absolute_url(), data)
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_if_background_was_deleted_cannot_update(self):
+        background = create_background(create_patient(self.user), True)
+
+        data = {
+            'title': 'Test Update',
+            'content': 'Lopez',
+            'date': '2001-02-15'
+        }
+
+        response = self.client.put(background.get_absolute_url(), data)
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_if_patient_was_deleted_cannot_delete_background(self):
+        background = create_background(create_patient(self.user), True)
+
+        response = self.client.delete(background.get_absolute_url())
 
         self.assertEqual(response.status_code, 400)

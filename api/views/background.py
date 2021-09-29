@@ -77,6 +77,11 @@ class BackgroundDetail(APIView):
     def put(self, request, pk, format=None):
         background = self.get_object(pk)
 
+        # IF patient is deleted or background is deleted you cannot continue
+        if(background.patient.deleted or background.deleted):
+            return Response("You can update background", 
+            status=status.HTTP_400_BAD_REQUEST)
+
         # check permission
         if not IsOwnerPatient.has_object_permission(
             self, request, background.patient):
@@ -92,6 +97,11 @@ class BackgroundDetail(APIView):
     def delete(self, request, pk, format=None):
         try:
             background = self.get_object(pk)
+
+            # IF patient is deleted or background is deleted you cannot continue
+            if(background.patient.deleted or background.deleted):
+                return Response("You can delete background", 
+                status=status.HTTP_400_BAD_REQUEST)
 
             # check permission
             if not IsOwnerPatient.has_object_permission(
