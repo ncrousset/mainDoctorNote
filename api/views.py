@@ -1,15 +1,19 @@
 from typing import OrderedDict
+
 from django.db.models.query import QuerySet
+from django.contrib.postgres.search import SearchVector, SearchQuery
+from django.core.paginator import Paginator
+from django.db.models import Q
+
 from rest_framework import viewsets, status, permissions
-from .serializers import PatientSerialize, BackgroundSerialize
-from .models import Patient, Background
 from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from django.contrib.postgres.search import SearchVector, SearchQuery
-from django.core.paginator import Paginator
-from django.db.models import Q
+from .serializers import PatientSerialize, BackgroundSerialize
+from .models import Patient, Background
+from .permissions import IsOwnerPatient
+
 
 # from django.views.decorators.csrf import csrf_exempt
 # from braces.views import CsrfExemptMixin
@@ -146,7 +150,7 @@ class PatientDetail(APIView):
 class BackgroundListCreate(APIView):
     serializer_class = BackgroundSerialize
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticated, 
     ]
 
     def get(self, request, pk):
@@ -195,7 +199,8 @@ class BackgroundDetail(APIView):
     serializer_class = BackgroundSerialize
 
     permission_classes = [
-        permissions.IsAuthenticated
+        permissions.IsAuthenticated, 
+        IsOwnerPatient
     ]
 
     def get_object(self, pk):
@@ -206,6 +211,13 @@ class BackgroundDetail(APIView):
 
     def put(self, request, pk, format=None):
         background = self.get_object(pk)
+
+        # check permission
+        if not IsOwnerPatient.has_object_permission(
+            self, request, background.patient):
+            return Response("you do not have permission for this action", 
+            status=status.HTTP_400_BAD_REQUEST)
+
         serializer = BackgroundSerialize(background, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -215,6 +227,13 @@ class BackgroundDetail(APIView):
     def delete(self, request, pk, format=None):
         try:
             background = self.get_object(pk)
+
+            # check permission
+            if not IsOwnerPatient.has_object_permission(
+                self, request, background.patient):
+                    return Response("you do not have permission for this action", 
+                        status=status.HTTP_400_BAD_REQUEST)
+            
             background.deleted = True
             background.deleted_date = datetime.datetime.now()
             background.save()

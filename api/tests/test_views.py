@@ -319,3 +319,84 @@ class BackgroundListCreateTest(TestCase):
         response = self.client.post(url, data)
 
         self.assertEqual(response.status_code, 400)
+
+class BackgroundDetailTest(TestCase):
+    
+    def setUp(self):
+
+        self.user = get_user_model().objects.create_user(
+            username='testuser',
+            email='testuser@gmail.com',
+            password='test'
+        )
+
+        other_user = get_user_model().objects.create_user(
+            username='other',
+            email='testuser@gmail.com',
+            password='test'
+        )
+
+        self.client = client_local()
+
+        self.patient = Patient.objects.create(
+            first_name='Natanael',
+            last_name='Acosta',
+            sex='m',
+            user_id=self.user
+        )
+
+        other_patient = Patient.objects.create(
+            first_name='Natanael',
+            last_name='Acosta',
+            sex='m',
+            user_id=other_user
+        )
+
+        self.background = Background.objects.create(
+            title='test',
+            content='test',
+            date='1922-12',
+            patient=self.patient
+        )
+
+        self.other_background = Background.objects.create(
+            title='test',
+            content='test',
+            date='1922-12',
+            patient=other_patient
+        )
+
+    def test_user_can_update_background(self):
+
+        data = {
+            'title': 'Test Update',
+            'content': 'Lopez',
+            'date': '2001-02-15'
+        }
+
+        response = self.client.put(self.background.get_absolute_url(), data)
+
+        background = Background.objects.get(pk=self.background.id)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(background.title, 'Test Update')
+
+    def test_user_can_delete_background(self):
+        response = self.client.delete(self.background.get_absolute_url())
+
+        background = Background.objects.get(pk=self.background.id)
+
+        self.assertEqual(response.status_code, 204)
+        self.assertTrue(background.deleted)
+
+    def test_only_owner_user_of_patient_can_update(self):
+        data = { 'title': 'Test Update', 'content': 'Lopez', 'date': '2001-02-15'}
+
+        response = self.client.put(self.other_background.get_absolute_url(), data)
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_only_owner_user_of_patient_can_delete(self):
+        response = self.client.delete(self.other_background.get_absolute_url())
+
+        self.assertEqual(response.status_code, 400)
