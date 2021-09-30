@@ -1,4 +1,5 @@
-from api.views import patient
+from django.http import response
+from api.views import medical_history, patient
 from rest_framework.test import APIClient
 
 from api.models import Patient, MedicalHistory
@@ -19,6 +20,12 @@ def client_local():
         HTTP_AUTHORIZATION='Token ' + response.data['token'])
 
     return client
+
+def create_user(username = 'testuser', email='email'):
+    return get_user_model().objects.create_user(
+            username=username,
+            email=email,
+            password='test')
 
 def create_patient(user, deleted=False):
      return Patient.objects.create(
@@ -129,5 +136,102 @@ class MedicalHistoryListCreateTest(TestCase):
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, 400)
+
+    
+    def test_only_owner_user_of_patient_can_add(self):
+        patient = create_patient(create_user('other', 'other@gmail.com'))
+
+        url = '/api/patient/' + str(patient.id ) + '/medical-history'
+
+        data = {
+            'title': 'Pedro',
+            'content': 'Lopez',
+            'date': '2001-02-15'
+        }
+
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 400)
+
+
+class MedicalHistoryDetailTest(TestCase):
+    
+    def setUp(self):
+        self.user = create_user()
+        # self.other_user = create_user()
+
+        self.client = client_local()
+
+        # self.patient = create_patient(self.user)
+
+    def test_user_can_update(self):
+        medical_history = create_medical_history(create_patient(self.user))
+
+        data = {
+            'title': 'Test Update', 
+            'content': 'Lopez', 
+            'date': '2001-02-15'
+        }
+        response = self.client.put(medical_history.get_absolute_url(), data)
+
+        medical_history = MedicalHistory.objects.get(pk=medical_history.id)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(medical_history.title, 'Test Update')
+
+    def test_user_can_delete(self):
+        medical_history = create_medical_history(create_patient(self.user))
+        response = self.client.delete(medical_history.get_absolute_url())
+
+        medical_history = MedicalHistory.objects.get(pk=medical_history.id)
+
+        self.assertEqual(response.status_code, 204)
+        self.assertTrue(medical_history.deleted)
+
+    def test_only_owner_user_of_patient_can_update(self):
+        patient = create_patient(create_user('other', 'other@gmail.com'))
+        medical_history = create_medical_history(patient)
+
+        data = { 'title': 'Test Update', 'content': 'Lopez', 'date': '2001-02-15'}
+
+        response = self.client.put(medical_history.get_absolute_url(), data)
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_only_owner_user_of_patient_can_delete(self):
+        patient = create_patient(create_user('other', 'other@gmail.com'))
+        medical_history = create_medical_history(patient)
+
+        response = self.client.delete(medical_history.get_absolute_url())
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_if_patient_was_deleted_cannot_update(self):
+        medical_history = create_medical_history(create_patient(self.user, True))
+
+        data = {
+            'title': 'Test Update',
+            'content': 'Lopez',
+            'date': '2001-02-15'
+        }
+
+        response = self.client.put(medical_history.get_absolute_url(), data)
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_if_patient_was_deleted_cannot_update(self):
+        medical_history = create_medical_history(create_patient(self.user, True))
+
+        data = {
+            'title': 'Test Update',
+            'content': 'Lopez',
+            'date': '2001-02-15'
+        }
+
+        response = self.client.put(medical_history.get_absolute_url(), data)
+
+        self.assertEqual(response.status_code, 400)
+
+
+
 
 
