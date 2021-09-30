@@ -10,9 +10,12 @@ urlpatterns = [
 
     path('patient/<int:pk>/background', views.BackgroundListCreate.as_view(), name='backgrounds'),
     path('patient/background/<int:pk>', views.BackgroundDetail.as_view(), name='background'),
-
     path('patient/<int:pk>/medical-history', views.MedicalHistoryListCreate.as_view(), name='medical-history-list'),
     path('patient/medical-history/<int:pk>', views.MedicalHistoryDetail.as_view(), name='medical-history'),
+
+    path('patient/<int:pk>/medical-studies', views.MedicalHistoryListCreate.as_view(), name='medical-studies'),
+    path('patient/medical-study/<int:pk>', views.MedicalHistoryDetail.as_view(), name='medical-study'),
+
 
     # only for test
     path('patient/faker/', views.faker_patients_for_test, name='faker'),

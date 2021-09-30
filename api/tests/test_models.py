@@ -1,7 +1,7 @@
 from django.db import models
 from django.test import TestCase
 from django.contrib.auth import get_user_model
-from api.models import Patient, Background, MedicalHistory
+from api.models import MedicalStudy, Patient, Background, MedicalHistory
 from django.urls import reverse
 
 def create_user():
@@ -76,3 +76,18 @@ class MedicalHistoryTest(TestCase):
     def test_get_absolute_url(self):
         self.assertEqual(self.medical_history.get_absolute_url(), 
         '/api/patient/medical-history/' + str(self.medical_history.id))
+
+class MedicalStudyTest(TestCase):
+    def setUp(self):
+        self.medical_study = MedicalStudy.objects.create(
+            title='Medical study',
+            content='Hola ',
+            patient=create_patient(create_user())
+        )
+
+    def test_object_name_is_title(self):
+        self.assertEquals(self.medical_study.title, 'Medical study')
+
+    def test_get_absolute_url(self):
+        self.assertEqual(self.medical_study.get_absolute_url(), 
+        '/api/patient/medical-study/' + str(self.medical_study.id))
