@@ -3,8 +3,7 @@ from . import views
 from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
-    re_path(r'^patients/$',
-            views.PatientList.as_view(), name='patients'),
+    re_path(r'^patients/$', views.PatientList.as_view(), name='patients'),
     path('patients/create', views.PatientCreate.as_view(), name='patient-create'),
     path('patient/<int:pk>/', views.PatientDetail.as_view(), name='patient'),
 
@@ -13,8 +12,8 @@ urlpatterns = [
     path('patient/<int:pk>/medical-history', views.MedicalHistoryListCreate.as_view(), name='medical-history-list'),
     path('patient/medical-history/<int:pk>', views.MedicalHistoryDetail.as_view(), name='medical-history'),
 
-    path('patient/<int:pk>/medical-studies', views.MedicalHistoryListCreate.as_view(), name='medical-studies'),
-    path('patient/medical-study/<int:pk>', views.MedicalHistoryDetail.as_view(), name='medical-study'),
+    path('patient/<int:pk>/medical-studies', views.MedicalStudyListCreate.as_view(), name='medical-studies'),
+    path('patient/medical-study/<int:pk>', views.MedicalStudyDetail.as_view(), name='medical-study'),
 
 
     # only for test
