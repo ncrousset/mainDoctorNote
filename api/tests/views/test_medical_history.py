@@ -218,16 +218,10 @@ class MedicalHistoryDetailTest(TestCase):
 
         self.assertEqual(response.status_code, 400)
 
-    def test_if_patient_was_deleted_cannot_update(self):
+    def test_if_patient_was_deleted_cannot_delete(self):
         medical_history = create_medical_history(create_patient(self.user, True))
 
-        data = {
-            'title': 'Test Update',
-            'content': 'Lopez',
-            'date': '2001-02-15'
-        }
-
-        response = self.client.put(medical_history.get_absolute_url(), data)
+        response = self.client.delete(medical_history.get_absolute_url())
 
         self.assertEqual(response.status_code, 400)
 
