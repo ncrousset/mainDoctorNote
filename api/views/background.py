@@ -26,7 +26,7 @@ class BackgroundListCreate(APIView):
         if Patient.objects.get(pk=pk).deleted:
             return Response("the patient was not found", 
                 status=status.HTTP_400_BAD_REQUEST)
-
+            
 
         background = Background.objects.all().filter(
             deleted=False, patient=pk).order_by('-date')

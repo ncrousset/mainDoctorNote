@@ -11,8 +11,8 @@ urlpatterns = [
     path('patient/<int:pk>/background', views.BackgroundListCreate.as_view(), name='backgrounds'),
     path('patient/background/<int:pk>', views.BackgroundDetail.as_view(), name='background'),
 
-    path('patient/<int:pk>/medical-history', views.BackgroundListCreate.as_view(), name='medical-history-list'),
-    path('patient/medical-history/<int:pk>', views.BackgroundDetail.as_view(), name='medical-history'),
+    path('patient/<int:pk>/medical-history', views.MedicalHistoryListCreate.as_view(), name='medical-history-list'),
+    # path('patient/medical-history/<int:pk>', views.BackgroundDetail.as_view(), name='medical-history'),
 
     # only for test
     path('patient/faker/', views.faker_patients_for_test, name='faker'),

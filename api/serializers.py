@@ -1,7 +1,7 @@
 from django.db.models import fields
 from django.db.models.base import Model
 from rest_framework import serializers
-from .models import Patient, Background
+from .models import Patient, Background, MedicalHistory
 from django.contrib.auth.models import User
 
 
@@ -13,6 +13,12 @@ class BackgroundSerialize(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Background.objects.create(**validated_data)
+
+class MedicalHistorySerialize(serializers.ModelSerializer):
+    class Meta:
+        model = MedicalHistory
+        fields = ('id', 'title' , 'content', 'date', 'patient', 'deleted', 'deleted_date')
+        extra_kwargs = {'patient': {'required': False}}
 
 
 class PatientSerialize(serializers.ModelSerializer):
