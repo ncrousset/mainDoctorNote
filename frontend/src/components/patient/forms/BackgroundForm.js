@@ -2,31 +2,40 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from "prop-types"
 
-import { addBackground } from '../../../actions/patient';
+import { addBackground, editBackground } from '../../../actions/patient';
 
 
 export class BackgroundForm extends Component {
 
-    state = {
-        title: '',
-        content: '',
-        date: ''
-    };
+    state = this.props.background;
 
     static propTypes = {
         onClose: PropTypes.func.isRequired,
-        addBackground: PropTypes.func.isRequired
+        addBackground: PropTypes.func.isRequired,
+        background: PropTypes.object.isRequired,
+        edit: PropTypes.bool.isRequired
     }
 
     onSubmit = event => {
         event.preventDefault()
-        this.props.addBackground(this.props.patient.id, this.state)
-            .then((response) => {
-                this.props.onClose()
-            })
-            .catch(error => {
-                console.log('error')
-            })
+
+        if (this.props.edit) {
+            this.props.editBackground(this.props.background, this.state)
+                .then((response) => {
+                    this.props.onClose()
+                })
+                .catch(error => {
+                    console.log('error')
+                })
+        } else {
+            this.props.addBackground(this.props.patient.id, this.state)
+                .then((response) => {
+                    this.props.onClose()
+                })
+                .catch(error => {
+                    console.log('error')
+                })
+        }
     }
 
     onChange = event => this.setState({
@@ -34,6 +43,9 @@ export class BackgroundForm extends Component {
     });
 
     render() {
+
+        const { title, content, date } = this.state
+
         return (
             <form action='' onSubmit={this.onSubmit}>
                 <div className="flex flex-col">
@@ -42,13 +54,13 @@ export class BackgroundForm extends Component {
                             <label className="text-gray-800 font-semibold" htmlFor="title">Title</label>
                             <input required onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none  
-                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="text" name="title" id="title" />
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="text" name="title" id="title" value={title} />
                         </div>
                         <div className="px-1 w-1/2">
                             <label className="text-gray-800 font-semibold" htmlFor="date">Date</label>
-                            <input required onChange={this.onChange}  className="w-full border border-gray-300 rounded-md p-2 mt-1
+                            <input required onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none 
-                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="month" name="date" id="date" />
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="month" name="date" id="date" value={date} />
                         </div>
                     </div>
 
@@ -57,7 +69,7 @@ export class BackgroundForm extends Component {
                             <label className="text-gray-800 font-semibold" htmlFor="content">Content</label>
                             <textarea rows='5' onChange={this.onChange} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none  
-                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" name="content" id="content" />
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" name="content" id="content" value={content} />
                         </div>
                     </div>
                 </div>
@@ -66,7 +78,7 @@ export class BackgroundForm extends Component {
                         type="submit"
 
                         className="mx-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                        {/* {(this.props.edit) ? 'Edit' : 'Add'} */} Add
+                        {(this.props.edit) ? 'Edit' : 'Add'}
                     </button>
                     <button type="button"
                         onClick={() => { this.props.onClose() }}
@@ -83,4 +95,4 @@ const mapStateToProps = state => ({
     patient: state.patient.patient
 });
 
-export default connect(mapStateToProps, {addBackground})(BackgroundForm)
+export default connect(mapStateToProps, { addBackground, editBackground })(BackgroundForm)

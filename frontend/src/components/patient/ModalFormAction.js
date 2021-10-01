@@ -12,11 +12,13 @@ export class ModalFormAction extends Component {
 
     static propTypes = {
         onClose: PropTypes.func.isRequired,
+        object: PropTypes.object,
+        edit: PropTypes.string
     }
 
     constructor() {
         super()
-        
+     
         this.title = {
             'background': 'Background',
             'mediacal_histories': 'Mediacal Histories',
@@ -25,7 +27,7 @@ export class ModalFormAction extends Component {
         }
 
         this.form = {
-            'background': <BackgroundForm onClose={() => this.onClose()}/>,
+            'background': <BackgroundForm onClose={() => this.onClose()} />,
             'mediacal_histories': <MedicalHistoriesForm onClose={() => this.onClose()} />,
             'medical_studies': <MedicalStudiesForm onClose={() => this.onClose()} />,
             'treatments': <TreatmentsForm onClose={() => this.onClose()}/>
@@ -46,11 +48,13 @@ export class ModalFormAction extends Component {
                 <div className="bg-white rounded-lg w-1/2 ">
                     <div className="flex flex-col items-start p-4">
                         <div className="flex items-center w-full border-b py-2">
-                            <div className="text-gray-900 font-medium text-lg">{this.title[session]}</div>
+                            <div className="text-gray-900 font-medium text-lg">{this.title[session]} { this.props.edit ? 'Edit' : 'Add' }</div>
                         </div>
 
                         <div className="w-full">
-                            {this.form[session]}
+                            {session == 'background' &&
+                                <BackgroundForm onClose={() => this.onClose()} background={this.props.object && this.props.object}  edit={this.props.edit} />
+                            }
                         </div>
                     </div>
                 </div>

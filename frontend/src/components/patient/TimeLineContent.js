@@ -7,11 +7,15 @@ import PropTypes from "prop-types";
 import {FaEdit, FaWindowClose} from 'react-icons/fa'
 
 
+import ModalFormAction from './ModalFormAction'
+
+
 export class TimeLineContent extends Component {
 
     static propTypes = {
         data: PropTypes.array.isRequired,
-        keyContent: PropTypes.string.isRequired
+        keyContent: PropTypes.string.isRequired,
+        onEdit: PropTypes.func.isRequired
     }
 
     render() {
@@ -37,7 +41,7 @@ export class TimeLineContent extends Component {
                     <div className="flex flex-row justify-between">
                         <h3 className="mb-3 font-bold  text-xl capitalize">{this.props.data.title}</h3>
                         <div className="flex flex-row space-x-2">
-                            <FaEdit className="text-blue-500 hover:text-blue-700 cursor-pointer"/>
+                            <FaEdit onClick={() => this.props.onEdit()}  className="text-blue-500 hover:text-blue-700 cursor-pointer"/>
                             <FaWindowClose onClick={() => this.onDeleteObj(this.props.data.id)} className="text-red-500 hover:text-red-700 cursor-pointer"/>
                         </div>
                     </div>
@@ -46,6 +50,7 @@ export class TimeLineContent extends Component {
                         {this.props.data.content}
                     </div>
                 </div>
+
             </div>
         )
     }

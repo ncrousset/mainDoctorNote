@@ -41,6 +41,8 @@ export class NavActionPatient extends Component {
     }
     
     render() {
+        const object = {title: '', content: '', date: ''}
+
         return (
             <div className="flex flex-col items-center py-1 px-5 justify-between">
                 <div className="flex items-center w-full">
@@ -60,7 +62,7 @@ export class NavActionPatient extends Component {
                     </button>
                 </div>
 
-                {this.state.show && <ModalFormAction onClose={() => this. hideModalForm ()} />}
+                {this.state.show && <ModalFormAction onClose={() => this. hideModalForm ()} object={object} edit={false} />}
 
             </div>
         )
