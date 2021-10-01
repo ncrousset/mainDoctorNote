@@ -6,7 +6,8 @@ import {
     GET_BACKGROUND,
     ADD_BACKGROUND,
     GET_ERRORS,
-    GET_ALERT
+    GET_ALERT,
+    DELETE_BACKGROUND
 } from './types';
 
 // GET Background
@@ -64,4 +65,38 @@ export const addBackground = (patient, data) => (dispatch, getState) => {
                 reject()
             })
     })
+}
+
+
+// Delete Background
+export const deleteBackground = (background) => (dispatch, getState) => {
+    axios.delete(`/api/patient/background/${background}`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: DELETE_BACKGROUND,
+                payload: background
+            });
+
+            const alert = {
+                type: 'str',
+                msg:  "Background Deleted",
+                status: response.status
+            }
+
+            dispatch({
+                type: GET_ALERT,
+                payload: alert
+            })
+        }).catch(error => {
+            const errors = {
+                type: 'str',
+                msg:  error.response.data,
+                status: error.response.status
+            }
+
+            dispatch({
+                type: GET_ERRORS,
+                payload: errors
+            })
+        })
 }

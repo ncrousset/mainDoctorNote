@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+
+import { deleteBackground } from '../../actions/patient';
+
 import PropTypes from "prop-types";
+import {FaEdit, FaWindowClose} from 'react-icons/fa'
 
 
 export class TimeLineContent extends Component {
@@ -15,6 +20,13 @@ export class TimeLineContent extends Component {
         const position = (isPar) ? "right-timeline" : "flex-row-reverse left-timeline"
         const backgroundAndColor = (isPar) ? "bg-green-400 text-gray-800 " : "bg-yellow-200 text-gray-800"
 
+        this.onDeleteObj = (id) => {
+        
+            if(confirm('Esta suguro')) {
+                this.props.deleteBackground(id)
+            }
+        }
+
         return (
             <div className={`mb-8 flex justify-between items-center w-full ${position}`}>
                 <div className="order-1 w-5/12"></div>
@@ -22,7 +34,14 @@ export class TimeLineContent extends Component {
                     <h1 className="mx-auto font-semibold text-lg text-white">{this.props.keyContent}</h1>
                 </div>
                 <div className={`order-1 rounded-lg shadow-xl w-5/12 px-6 py-4 ${backgroundAndColor}`}>
-                    <h3 className="mb-3 font-bold  text-xl">{this.props.data.title}</h3>
+                    <div className="flex flex-row justify-between">
+                        <h3 className="mb-3 font-bold  text-xl capitalize">{this.props.data.title}</h3>
+                        <div className="flex flex-row space-x-2">
+                            <FaEdit className="text-blue-500 hover:text-blue-700 cursor-pointer"/>
+                            <FaWindowClose onClick={() => this.onDeleteObj(this.props.data.id)} className="text-red-500 hover:text-red-700 cursor-pointer"/>
+                        </div>
+                    </div>
+                
                     <div className="text-sm leading-snug tracking-wide text-opacity-100">
                         {this.props.data.content}
                     </div>
@@ -32,4 +51,9 @@ export class TimeLineContent extends Component {
     }
 }
 
-export default TimeLineContent
+const mapStateToProps = state => ({
+
+});
+
+
+export default connect(mapStateToProps, { deleteBackground })(TimeLineContent)

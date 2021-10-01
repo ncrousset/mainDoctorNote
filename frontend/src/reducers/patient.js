@@ -2,7 +2,8 @@ import {
     GET_PATIENT,
     GET_SESSION_PATIENT,
     GET_BACKGROUND,
-    ADD_BACKGROUND
+    ADD_BACKGROUND,
+    DELETE_BACKGROUND
 } from '../actions/types'
 
 const initialState = {
@@ -31,8 +32,16 @@ export default function (state = initialState, action) {
         case ADD_BACKGROUND:
                 return {
                     ...state,
-                    background: [...state.background, action.payload]
+                    background: [action.payload, ...state.background]
             };
+        case DELETE_BACKGROUND:
+            return {
+                ...state,
+                background: state.background.filter(background => {
+                    return background.id !== action.payload
+                })
+        };
+
         default:
             return state;
     }
