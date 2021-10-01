@@ -13,8 +13,8 @@ urlpatterns = [
     path('patient/medical-history/<int:pk>', views.MedicalHistoryDetail.as_view(), name='medical-history'),
     path('patient/<int:pk>/medical-studies', views.MedicalStudyListCreate.as_view(), name='medical-studies'),
     path('patient/medical-study/<int:pk>', views.MedicalStudyDetail.as_view(), name='medical-study'),
-    path('patient/<int:pk>/medical-treatments', views.MedicalStudyListCreate.as_view(), name='medical-treatments'),
-    path('patient/medical-treatment/<int:pk>', views.MedicalStudyDetail.as_view(), name='medical-treatment'),
+    path('patient/<int:pk>/medical-treatments', views.MedicalTreatmentListCreate.as_view(), name='medical-treatments'),
+    path('patient/medical-treatment/<int:pk>', views.MedicalTreatmentDetail.as_view(), name='medical-treatment'),
 
 
     # only for test
