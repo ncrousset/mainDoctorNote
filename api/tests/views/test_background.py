@@ -28,7 +28,6 @@ def client_local():
 
     return client
 
-
 def create_patient(user, deleted=False):
      return Patient.objects.create(
             first_name='Natanael', last_name='Acosta', 

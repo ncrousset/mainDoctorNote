@@ -11,9 +11,10 @@ urlpatterns = [
     path('patient/background/<int:pk>', views.BackgroundDetail.as_view(), name='background'),
     path('patient/<int:pk>/medical-history', views.MedicalHistoryListCreate.as_view(), name='medical-history-list'),
     path('patient/medical-history/<int:pk>', views.MedicalHistoryDetail.as_view(), name='medical-history'),
-
     path('patient/<int:pk>/medical-studies', views.MedicalStudyListCreate.as_view(), name='medical-studies'),
     path('patient/medical-study/<int:pk>', views.MedicalStudyDetail.as_view(), name='medical-study'),
+    path('patient/<int:pk>/medical-treatments', views.MedicalStudyListCreate.as_view(), name='medical-treatments'),
+    path('patient/medical-treatment/<int:pk>', views.MedicalStudyDetail.as_view(), name='medical-treatment'),
 
 
     # only for test

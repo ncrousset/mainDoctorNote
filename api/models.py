@@ -116,3 +116,24 @@ class MedicalStudy(models.Model):
     
     class Meta:
         verbose_name_plural = "medical_studies"
+
+
+class MedicalTreatment(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+
+    deleted = models.BooleanField(default=False, blank=True, null=True)
+    deleted_date = models.DateTimeField(blank=True, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse("medical-treatment", kwargs={"pk": self.pk})
+
+    def __str__(self):
+        return self.title
+    
+    class Meta:
+        verbose_name_plural = "medical_treatments"
