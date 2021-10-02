@@ -235,3 +235,45 @@ export const deleteMedicalHistories = (medicalHistory) => (dispatch, getState) =
             })
         })
 }
+
+//Edit Medical histories  
+export const editMedicalHistory = (medicalHistory, data) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .put(`/api/patient/medical-history/${medicalHistory.id}`, data, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: UPDATE_MEDICAL_HISTORY,
+                    payload: response.data
+                });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Medical history udated",
+                    status: response.status
+                }
+
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
+                resolve(response.data)
+
+            }).catch(error => {
+             
+                const errors = {
+                    type: 'str',
+                    msg:  error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
+}

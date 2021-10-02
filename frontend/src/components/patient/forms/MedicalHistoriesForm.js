@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from "prop-types"
 
-import { addMedicalHistories } from '../../../actions/patient';
+import { 
+    addMedicalHistories, 
+    editMedicalHistory 
+} from '../../../actions/patient';
 
 
 export class MedicalHistoriesForm extends Component {
@@ -20,13 +23,13 @@ export class MedicalHistoriesForm extends Component {
         event.preventDefault()
 
         if (this.props.edit) {
-            // this.props.editBackground(this.props.background, this.state)
-            //     .then((response) => {
-            //         this.props.onClose()
-            //     })
-            //     .catch(error => {
-            //         console.log('error')
-            //     })
+            this.props.editMedicalHistory(this.props.medicalHistory, this.state)
+                .then((response) => {
+                    this.props.onClose()
+                })
+                .catch(error => {
+                    console.log('error')
+                })
         } else {
             this.props.addMedicalHistories(this.props.patient.id, this.state)
                 .then((response) => {
@@ -96,7 +99,8 @@ const mapStateToProps = state => ({
 });
 
 const mapStateFuntion = {
-    addMedicalHistories
+    addMedicalHistories,
+    editMedicalHistory
 }
 
 export default connect(mapStateToProps, mapStateFuntion)(MedicalHistoriesForm)

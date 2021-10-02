@@ -7,7 +7,8 @@ import {
     UPDATE_BACKGROUND,
     GET_MEDICAL_HISTORIES,
     ADD_MEDICAL_HISTORY,
-    DELETE_MEDICAL_HISTORY
+    DELETE_MEDICAL_HISTORY,
+    UPDATE_MEDICAL_HISTORY
 } from '../actions/types'
 
 const initialState = {
@@ -62,6 +63,13 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 medical_histories: [action.payload, ...state.medical_histories]
+            };
+        case UPDATE_MEDICAL_HISTORY:
+            return {
+                ...state,
+                medical_histories: state.medical_histories.map(medical_histories => {
+                    return medical_histories.id !== action.payload.id ? medical_histories : action.payload
+                })
             };
         case DELETE_MEDICAL_HISTORY:
             return {
