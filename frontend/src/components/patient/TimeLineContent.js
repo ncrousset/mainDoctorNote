@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import { deleteBackground } from '../../actions/patient';
+import {
+    deleteBackground,
+    deleteMedicalHistories
+} from '../../actions/patient';
 
 import PropTypes from "prop-types";
-import {FaEdit, FaWindowClose, FaCalendarAlt} from 'react-icons/fa'
+import { FaEdit, FaWindowClose, FaCalendarAlt } from 'react-icons/fa'
 
 
 import ModalFormAction from './ModalFormAction'
@@ -25,9 +28,16 @@ export class TimeLineContent extends Component {
         const backgroundAndColor = (isPar) ? "bg-green-400 text-gray-800 " : "bg-yellow-200 text-gray-800"
 
         this.onDeleteObj = (id) => {
-        
-            if(confirm('Esta suguro')) {
-                this.props.deleteBackground(id)
+
+            const session = this.props.session
+
+            if (confirm('Esta suguro')) {
+                if(session == 'background') {
+                    this.props.deleteBackground(id)
+                } else if(session == 'medical_histories')  {
+                    this.props.deleteMedicalHistories(id)
+                }
+               
             }
         }
 
@@ -46,13 +56,13 @@ export class TimeLineContent extends Component {
                                 <span>{this.props.data.date}</span>
                             </div>
                         </div>
-                        
+
                         <div className="flex flex-row space-x-2">
-                            <FaEdit onClick={() => this.props.onEdit()}  className="text-blue-500 hover:text-blue-700 cursor-pointer"/>
-                            <FaWindowClose onClick={() => this.onDeleteObj(this.props.data.id)} className="text-red-500 hover:text-red-700 cursor-pointer"/>
+                            <FaEdit onClick={() => this.props.onEdit()} className="text-blue-500 hover:text-blue-700 cursor-pointer" />
+                            <FaWindowClose onClick={() => this.onDeleteObj(this.props.data.id)} className="text-red-500 hover:text-red-700 cursor-pointer" />
                         </div>
                     </div>
-                
+
                     <div className="text-sm leading-snug tracking-wide text-opacity-100 bg-gray-100 rounded-md p-2">
                         {this.props.data.content}
                     </div>
@@ -64,8 +74,12 @@ export class TimeLineContent extends Component {
 }
 
 const mapStateToProps = state => ({
-
+    session: state.patient.session
 });
 
+const mapStateFunction = {
+    deleteBackground,
+    deleteMedicalHistories
+}
 
-export default connect(mapStateToProps, { deleteBackground })(TimeLineContent)
+export default connect(mapStateToProps, mapStateFunction)(TimeLineContent)

@@ -9,7 +9,9 @@ import {
     DELETE_BACKGROUND,
     UPDATE_BACKGROUND,
     GET_MEDICAL_HISTORIES,
-    ADD_MEDICAL_HISTORIES
+    ADD_MEDICAL_HISTORY,
+    UPDATE_MEDICAL_HISTORY,
+    DELETE_MEDICAL_HISTORY
 } from './types';
 
 // GET Background
@@ -166,7 +168,7 @@ export const addMedicalHistories = (patient, data) => (dispatch, getState) => {
             .post(`/api/patient/${patient}/medical-history`, data, Token.getTokenConfig(getState))
             .then(response => {
                 dispatch({
-                    type: ADD_MEDICAL_HISTORIES,
+                    type: ADD_MEDICAL_HISTORY,
                     payload: response.data
                 });
 
@@ -199,4 +201,37 @@ export const addMedicalHistories = (patient, data) => (dispatch, getState) => {
                 reject()
             })
     })
+}
+
+// Delete Medical histories 
+export const deleteMedicalHistories = (medicalHistory) => (dispatch, getState) => {
+    axios.delete(`/api/patient/medical-history/${medicalHistory}`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: DELETE_MEDICAL_HISTORY,
+                payload: medicalHistory
+            });
+
+            const alert = {
+                type: 'str',
+                msg:  "Medical History Deleted",
+                status: response.status
+            }
+
+            dispatch({
+                type: GET_ALERT,
+                payload: alert
+            })
+        }).catch(error => {
+            const errors = {
+                type: 'str',
+                msg:  error.response.data,
+                status: error.response.status
+            }
+
+            dispatch({
+                type: GET_ERRORS,
+                payload: errors
+            })
+        })
 }
