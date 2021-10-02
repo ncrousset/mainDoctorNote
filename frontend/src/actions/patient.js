@@ -8,7 +8,8 @@ import {
     GET_ALERT,
     DELETE_BACKGROUND,
     UPDATE_BACKGROUND,
-    GET_MEDICAL_HISTORIES
+    GET_MEDICAL_HISTORIES,
+    ADD_MEDICAL_HISTORIES
 } from './types';
 
 // GET Background
@@ -156,4 +157,46 @@ export const getMedicalHistories = (patient) => (dispatch, getState) => {
             // dispatch(returnErrors('error', 45))
             // dispatch({ type: GET_ERRORS })
         })
+}
+
+//Add Medical histories 
+export const addMedicalHistories = (patient, data) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`/api/patient/${patient}/medical-history`, data, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: ADD_MEDICAL_HISTORIES,
+                    payload: response.data
+                });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Medical histories create",
+                    status: response.status
+                }
+
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
+                resolve(response.data)
+
+            }).catch(error => {
+             
+                const errors = {
+                    type: 'str',
+                    msg:  error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
 }

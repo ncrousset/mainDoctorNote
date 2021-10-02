@@ -5,7 +5,8 @@ import {
     ADD_BACKGROUND,
     DELETE_BACKGROUND,
     UPDATE_BACKGROUND,
-    GET_MEDICAL_HISTORIES
+    GET_MEDICAL_HISTORIES,
+    ADD_MEDICAL_HISTORIES
 } from '../actions/types'
 
 const initialState = {
@@ -55,6 +56,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 medical_histories: action.payload,
+            };
+        case ADD_MEDICAL_HISTORIES:
+            return {
+                ...state,
+                medical_histories: [action.payload, ...state.medical_histories]
             };
 
         default:

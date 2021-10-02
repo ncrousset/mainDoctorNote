@@ -21,7 +21,7 @@ export class ModalFormAction extends Component {
      
         this.title = {
             'background': 'Background',
-            'mediacal_histories': 'Mediacal Histories',
+            'medical_histories': 'Mediacal Histories',
             'medical_studies': 'Medical Studies',
             'treatments': 'Treatments'
         }
@@ -55,6 +55,10 @@ export class ModalFormAction extends Component {
                             {session == 'background' &&
                                 <BackgroundForm onClose={() => this.onClose()} background={this.props.object && this.props.object}  edit={this.props.edit} />
                             }
+                            {session == 'medical_histories' &&
+                                <MedicalHistoriesForm onClose={() => this.onClose()} medicalHistory={this.props.object && this.props.object}  edit={this.props.edit} />
+                            }
+
                         </div>
                     </div>
                 </div>
