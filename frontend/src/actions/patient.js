@@ -282,7 +282,7 @@ export const editMedicalHistory = (medicalHistory, data) => (dispatch, getState)
     })
 }
 
-// GET Medical histories
+// GET Medical studies
 export const getMedicalStudies = (patient) => (dispatch, getState) => {
 
     axios.get(`/api/patient/${patient}/medical-studies`, Token.getTokenConfig(getState))
@@ -295,4 +295,121 @@ export const getMedicalStudies = (patient) => (dispatch, getState) => {
             // dispatch(returnErrors('error', 45))
             // dispatch({ type: GET_ERRORS })
         })
+}
+
+//Add Medical study 
+export const addMedicalStudy = (patient, data) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`/api/patient/${patient}/medical-studies`, data, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: ADD_MEDICAL_STUDY,
+                    payload: response.data
+                });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Medical study create",
+                    status: response.status
+                }
+
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
+                resolve(response.data)
+
+            }).catch(error => {
+             
+                const errors = {
+                    type: 'str',
+                    msg:  error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
+}
+
+// Delete Medical study 
+export const deleteMedicalStudy = (medicalStudy) => (dispatch, getState) => {
+    axios.delete(`/api/patient/medical-study/${medicalStudy}`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: DELETE_MEDICAL_STUDY,
+                payload: medicalStudy
+            });
+
+            const alert = {
+                type: 'str',
+                msg:  "Medical Study Deleted",
+                status: response.status
+            }
+
+            dispatch({
+                type: GET_ALERT,
+                payload: alert
+            })
+        }).catch(error => {
+            const errors = {
+                type: 'str',
+                msg:  error.response.data,
+                status: error.response.status
+            }
+
+            dispatch({
+                type: GET_ERRORS,
+                payload: errors
+            })
+        })
+}
+
+//Edit Medical Study  
+export const editMedicalStudy = (medicalStudy, data) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .put(`/api/patient/medical-study/${medicalStudy.id}`, data, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: UPDATE_MEDICAL_STUDY,
+                    payload: response.data
+                });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Medical study udated",
+                    status: response.status
+                }
+
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
+                resolve(response.data)
+
+            }).catch(error => {
+             
+                const errors = {
+                    type: 'str',
+                    msg:  error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
 }

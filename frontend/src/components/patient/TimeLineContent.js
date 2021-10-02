@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import {
     deleteBackground,
-    deleteMedicalHistories
+    deleteMedicalHistories,
+    deleteMedicalStudy
 } from '../../actions/patient';
 
 import PropTypes from "prop-types";
@@ -18,7 +19,10 @@ export class TimeLineContent extends Component {
     static propTypes = {
         data: PropTypes.array.isRequired,
         keyContent: PropTypes.string.isRequired,
-        onEdit: PropTypes.func.isRequired
+        onEdit: PropTypes.func.isRequired,
+        deleteBackground: PropTypes.func.isRequired,
+        deleteMedicalHistories: PropTypes.func.isRequired,
+        deleteMedicalStudy: PropTypes.func.isRequired,
     }
 
     render() {
@@ -36,6 +40,8 @@ export class TimeLineContent extends Component {
                     this.props.deleteBackground(id)
                 } else if(session == 'medical_histories')  {
                     this.props.deleteMedicalHistories(id)
+                } else if(session == 'medical_studies')  {
+                    this.props.deleteMedicalStudy(id)
                 }
                
             }
@@ -79,7 +85,8 @@ const mapStateToProps = state => ({
 
 const mapStateFunction = {
     deleteBackground,
-    deleteMedicalHistories
+    deleteMedicalHistories,
+    deleteMedicalStudy
 }
 
 export default connect(mapStateToProps, mapStateFunction)(TimeLineContent)

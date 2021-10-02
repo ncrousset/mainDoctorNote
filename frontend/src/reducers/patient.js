@@ -9,7 +9,10 @@ import {
     ADD_MEDICAL_HISTORY,
     DELETE_MEDICAL_HISTORY,
     UPDATE_MEDICAL_HISTORY,
-    GET_MEDICAL_STUDIES
+    GET_MEDICAL_STUDIES,
+    ADD_MEDICAL_STUDY,
+    UPDATE_MEDICAL_STUDY,
+    DELETE_MEDICAL_STUDY
 } from '../actions/types'
 
 const initialState = {
@@ -85,7 +88,25 @@ export default function (state = initialState, action) {
                 ...state,
                 medical_studies: action.payload,
             };
-
+        case ADD_MEDICAL_STUDY:
+            return {
+                ...state,
+                medical_studies: [action.payload, ...state.medical_studies]
+            };
+        case UPDATE_MEDICAL_STUDY:
+            return {
+                ...state,
+                medical_studies: state.medical_studies.map(medical_study => {
+                    return medical_study.id !== action.payload.id ? medical_study : action.payload
+                })
+            };
+        case DELETE_MEDICAL_STUDY:
+            return {
+                ...state,
+                medical_studies: state.medical_studies.filter(medical_study => {
+                    return medical_study.id !== action.payload
+                })
+            };
         default:
             return state;
     }

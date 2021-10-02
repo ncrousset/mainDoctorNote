@@ -58,6 +58,9 @@ export class ModalFormAction extends Component {
                             {session == 'medical_histories' &&
                                 <MedicalHistoriesForm onClose={() => this.onClose()} medicalHistory={this.props.object && this.props.object}  edit={this.props.edit} />
                             }
+                            {session == 'medical_studies' &&
+                                <MedicalStudiesForm onClose={() => this.onClose()} medicalStudy={this.props.object && this.props.object}  edit={this.props.edit} />
+                            }
 
                         </div>
                     </div>
