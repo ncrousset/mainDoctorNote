@@ -23,7 +23,7 @@ export class ModalFormAction extends Component {
             'background': 'Background',
             'medical_histories': 'Mediacal Histories',
             'medical_studies': 'Medical Studies',
-            'treatments': 'Treatments'
+            'medical_treatments': 'Treatments'
         }
 
         this.form = {
@@ -60,6 +60,9 @@ export class ModalFormAction extends Component {
                             }
                             {session == 'medical_studies' &&
                                 <MedicalStudiesForm onClose={() => this.onClose()} medicalStudy={this.props.object && this.props.object}  edit={this.props.edit} />
+                            }
+                            {session == 'medical_treatments' &&
+                                <TreatmentsForm onClose={() => this.onClose()} medicalTreatment={this.props.object && this.props.object}  edit={this.props.edit} />
                             }
 
                         </div>

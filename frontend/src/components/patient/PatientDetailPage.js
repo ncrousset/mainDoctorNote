@@ -6,7 +6,8 @@ import { getPatient } from '../../actions/patients'
 import { 
     getBackground, 
     getMedicalHistories,
-    getMedicalStudies
+    getMedicalStudies,
+    getMedicalTreatments
 } from '../../actions/patient'
 
 import Main from '../layout/Main'
@@ -41,7 +42,10 @@ export class PatientDetailPage extends Component {
     static propTypes = {
         patient: PropTypes.object.isRequired,
         getPatient: PropTypes.func.isRequired,
-        getBackground: PropTypes.func,
+        getBackground: PropTypes.func.isRequired,
+        getMedicalHistories: PropTypes.func.isRequired,
+        getMedicalStudies: PropTypes.func.isRequired,
+        getMedicalTreatments: PropTypes.func.isRequired,
     }
 
     componentDidMount() {
@@ -50,6 +54,7 @@ export class PatientDetailPage extends Component {
         this.props.getBackground(id)
         this.props.getMedicalHistories(id)
         this.props.getMedicalStudies(id)
+        this.props.getMedicalTreatments(id)
     }
 
 
@@ -64,7 +69,7 @@ export class PatientDetailPage extends Component {
         } else if(this.props.session == 'medical_studies') {
             timeLineObejct = this.props.medical_studies
         } else if(this.props.session == 'medical_treatments') {
-            // timeLineObejct = this.props.background
+            timeLineObejct = this.props.medical_treatments
         }
         
 
@@ -99,13 +104,15 @@ const mapStateToProps = state => ({
     background: state.patient.background,
     medical_histories: state.patient.medical_histories,
     medical_studies: state.patient.medical_studies,
+    medical_treatments: state.patient.medical_treatments,
 });
 
 const mapStateFuntion = {
     getPatient,
     getBackground,
     getMedicalHistories,
-    getMedicalStudies
+    getMedicalStudies,
+    getMedicalTreatments
 }
 
 export default connect(mapStateToProps, mapStateFuntion)(PatientDetailPage)

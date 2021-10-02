@@ -51,7 +51,7 @@ export class NavActionPatient extends Component {
                             <div onClick={() => this.onClickSession('background')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'background') && 'active'}`}>Background</div>
                             <div onClick={() => this.onClickSession('medical_histories')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'medical_histories') && 'active'}`}>Mediacal Histories</div>
                             <div onClick={() => this.onClickSession('medical_studies')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'medical_studies') && 'active'}`}>Medical Studies</div>
-                            <div onClick={() => this.onClickSession('medical_treatments')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'treatments') && 'active'}`}>Treatments</div>
+                            <div onClick={() => this.onClickSession('medical_treatments')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'medical_treatments') && 'active'}`}>Treatments</div>
                         </div>
                     </div>
                 </div>

@@ -12,7 +12,11 @@ import {
     GET_MEDICAL_STUDIES,
     ADD_MEDICAL_STUDY,
     UPDATE_MEDICAL_STUDY,
-    DELETE_MEDICAL_STUDY
+    DELETE_MEDICAL_STUDY,
+    GET_MEDICAL_TREATMENTS,
+    ADD_MEDICAL_TREATMENT,
+    UPDATE_MEDICAL_TREATMENT,
+    DELETE_MEDICAL_TREATMENT
 } from '../actions/types'
 
 const initialState = {
@@ -20,7 +24,8 @@ const initialState = {
     session: 'background',
     background: [],
     medical_histories: [],
-    medical_studies: []
+    medical_studies: [],
+    medical_treatments: [],
 }
 
 export default function (state = initialState, action) {
@@ -105,6 +110,30 @@ export default function (state = initialState, action) {
                 ...state,
                 medical_studies: state.medical_studies.filter(medical_study => {
                     return medical_study.id !== action.payload
+                })
+            };
+        case GET_MEDICAL_TREATMENTS:
+            return {
+                ...state,
+                medical_treatments: action.payload,
+            };
+        case ADD_MEDICAL_TREATMENT:
+            return {
+                ...state,
+                medical_treatments: [action.payload, ...state.medical_treatments]
+            };
+        case UPDATE_MEDICAL_TREATMENT:
+            return {
+                ...state,
+                medical_treatments: state.medical_treatments.map(medical_treatment => {
+                    return medical_treatment.id !== action.payload.id ? medical_treatment : action.payload
+                })
+            };
+        case DELETE_MEDICAL_TREATMENT:
+            return {
+                ...state,
+                medical_treatments: state.medical_treatments.filter(medical_treatment => {
+                    return medical_treatment.id !== action.payload
                 })
             };
         default:

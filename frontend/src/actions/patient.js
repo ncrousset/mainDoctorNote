@@ -15,7 +15,11 @@ import {
     GET_MEDICAL_STUDIES,
     ADD_MEDICAL_STUDY,
     DELETE_MEDICAL_STUDY,
-    UPDATE_MEDICAL_STUDY
+    UPDATE_MEDICAL_STUDY,
+    GET_MEDICAL_TREATMENTS,
+    ADD_MEDICAL_TREATMENT,
+    UPDATE_MEDICAL_TREATMENT,
+    DELETE_MEDICAL_TREATMENT
 } from './types';
 
 // GET Background
@@ -386,6 +390,138 @@ export const editMedicalStudy = (medicalStudy, data) => (dispatch, getState) => 
                 const alert = {
                     type: 'str',
                     msg:  "Medical study udated",
+                    status: response.status
+                }
+
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
+                resolve(response.data)
+
+            }).catch(error => {
+             
+                const errors = {
+                    type: 'str',
+                    msg:  error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
+}
+
+// GET Medical treatments
+export const getMedicalTreatments = (patient) => (dispatch, getState) => {
+
+    axios.get(`/api/patient/${patient}/medical-treatments`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: GET_MEDICAL_TREATMENTS,
+                payload: response.data.data
+            });
+        }).catch(error => {
+            // dispatch(returnErrors('error', 45))
+            // dispatch({ type: GET_ERRORS })
+        })
+}
+
+//Add Medical treatment 
+export const addMedicalTreatment= (patient, data) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .post(`/api/patient/${patient}/medical-treatments`, data, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: ADD_MEDICAL_TREATMENT,
+                    payload: response.data
+                });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Medical treatment create",
+                    status: response.status
+                }
+
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
+                resolve(response.data)
+
+            }).catch(error => {
+             
+                const errors = {
+                    type: 'str',
+                    msg:  error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
+}
+
+// Delete Medical treatment
+export const deleteMedicalTreatment = (medicalTreatment) => (dispatch, getState) => {
+    axios.delete(`/api/patient/medical-treatment/${medicalTreatment}`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: DELETE_MEDICAL_TREATMENT,
+                payload: medicalTreatment
+            });
+
+            const alert = {
+                type: 'str',
+                msg:  "Medical Treatment Deleted",
+                status: response.status
+            }
+
+            dispatch({
+                type: GET_ALERT,
+                payload: alert
+            })
+        }).catch(error => {
+            const errors = {
+                type: 'str',
+                msg:  error.response.data,
+                status: error.response.status
+            }
+
+            dispatch({
+                type: GET_ERRORS,
+                payload: errors
+            })
+        })
+}
+
+//Edit Medical treatment  
+export const editMedicalTreatment = (medicalTreatment, data) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        axios
+            .put(`/api/patient/medical-treatment/${medicalTreatment.id}`, data, Token.getTokenConfig(getState))
+            .then(response => {
+                dispatch({
+                    type: UPDATE_MEDICAL_TREATMENT,
+                    payload: response.data
+                });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Medical Treatment udated",
                     status: response.status
                 }
 
