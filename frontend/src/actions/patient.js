@@ -11,7 +11,11 @@ import {
     GET_MEDICAL_HISTORIES,
     ADD_MEDICAL_HISTORY,
     UPDATE_MEDICAL_HISTORY,
-    DELETE_MEDICAL_HISTORY
+    DELETE_MEDICAL_HISTORY,
+    GET_MEDICAL_STUDIES,
+    ADD_MEDICAL_STUDY,
+    DELETE_MEDICAL_STUDY,
+    UPDATE_MEDICAL_STUDY
 } from './types';
 
 // GET Background
@@ -276,4 +280,19 @@ export const editMedicalHistory = (medicalHistory, data) => (dispatch, getState)
                 reject()
             })
     })
+}
+
+// GET Medical histories
+export const getMedicalStudies = (patient) => (dispatch, getState) => {
+
+    axios.get(`/api/patient/${patient}/medical-studies`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: GET_MEDICAL_STUDIES,
+                payload: response.data.data
+            });
+        }).catch(error => {
+            // dispatch(returnErrors('error', 45))
+            // dispatch({ type: GET_ERRORS })
+        })
 }

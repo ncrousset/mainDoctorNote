@@ -5,7 +5,8 @@ import { connect } from 'react-redux'
 import { getPatient } from '../../actions/patients'
 import { 
     getBackground, 
-    getMedicalHistories 
+    getMedicalHistories,
+    getMedicalStudies
 } from '../../actions/patient'
 
 import Main from '../layout/Main'
@@ -48,6 +49,7 @@ export class PatientDetailPage extends Component {
         this.props.getPatient(id)
         this.props.getBackground(id)
         this.props.getMedicalHistories(id)
+        this.props.getMedicalStudies(id)
     }
 
 
@@ -60,7 +62,7 @@ export class PatientDetailPage extends Component {
         } else if(this.props.session == 'medical_histories') {
             timeLineObejct = this.props.medical_histories
         } else if(this.props.session == 'medical_studies') {
-            // timeLineObejct = this.props.background
+            timeLineObejct = this.props.medical_studies
         } else if(this.props.session == 'medical_treatments') {
             // timeLineObejct = this.props.background
         }
@@ -96,13 +98,14 @@ const mapStateToProps = state => ({
     session: state.patient.session,
     background: state.patient.background,
     medical_histories: state.patient.medical_histories,
-
+    medical_studies: state.patient.medical_studies,
 });
 
 const mapStateFuntion = {
     getPatient,
     getBackground,
-    getMedicalHistories
+    getMedicalHistories,
+    getMedicalStudies
 }
 
 export default connect(mapStateToProps, mapStateFuntion)(PatientDetailPage)

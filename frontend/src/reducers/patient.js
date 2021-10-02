@@ -8,14 +8,16 @@ import {
     GET_MEDICAL_HISTORIES,
     ADD_MEDICAL_HISTORY,
     DELETE_MEDICAL_HISTORY,
-    UPDATE_MEDICAL_HISTORY
+    UPDATE_MEDICAL_HISTORY,
+    GET_MEDICAL_STUDIES
 } from '../actions/types'
 
 const initialState = {
     patient: null,
     session: 'background',
     background: [],
-    medical_histories: []
+    medical_histories: [],
+    medical_studies: []
 }
 
 export default function (state = initialState, action) {
@@ -77,6 +79,11 @@ export default function (state = initialState, action) {
                 medical_histories: state.medical_histories.filter(medical_histories => {
                     return medical_histories.id !== action.payload
                 })
+            };
+        case GET_MEDICAL_STUDIES:
+            return {
+                ...state,
+                medical_studies: action.payload,
             };
 
         default:
