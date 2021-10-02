@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import { getPatient } from '../../actions/patients'
-import { getBackground } from '../../actions/patient'
+import { 
+    getBackground, 
+    getMedicalHistories 
+} from '../../actions/patient'
 
 import Main from '../layout/Main'
 import CardPatientDetail from './CardPatientDetail'
@@ -44,10 +47,24 @@ export class PatientDetailPage extends Component {
         const id = parseInt(this.props.match.params.id)
         this.props.getPatient(id)
         this.props.getBackground(id)
+        this.props.getMedicalHistories(id)
     }
 
 
     render() {
+
+        let timeLineObejct = null
+        
+        if(this.props.session == 'background') {
+            timeLineObejct = this.props.background
+        } else if(this.props.session == 'medical_histories') {
+            timeLineObejct = this.props.medical_histories
+        } else if(this.props.session == 'medical_studies') {
+            // timeLineObejct = this.props.background
+        } else if(this.props.session == 'medical_treatments') {
+            // timeLineObejct = this.props.background
+        }
+        
 
         return (
             <Main>
@@ -63,7 +80,7 @@ export class PatientDetailPage extends Component {
 
                     <NavActionPatient />
 
-                    {this.props.background != null && <TimeLineAction data={this.props.background}/>}
+                    {timeLineObejct != null && <TimeLineAction data={timeLineObejct}/>}
 
                 </section>
 
@@ -76,7 +93,16 @@ export class PatientDetailPage extends Component {
 
 const mapStateToProps = state => ({
     patient: state.patient.patient,
-    background: state.patient.background
+    session: state.patient.session,
+    background: state.patient.background,
+    medical_histories: state.patient.medical_histories,
+
 });
 
-export default connect(mapStateToProps, { getPatient, getBackground })(PatientDetailPage)
+const mapStateFuntion = {
+    getPatient,
+    getBackground,
+    getMedicalHistories
+}
+
+export default connect(mapStateToProps, mapStateFuntion)(PatientDetailPage)

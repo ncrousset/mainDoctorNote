@@ -49,9 +49,9 @@ export class NavActionPatient extends Component {
                     <div className="w-full bg-green-400 rounded-lg ">
                         <div className="md:flex justify-between text-white">
                             <div onClick={() => this.onClickSession('background')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'background') && 'active'}`}>Background</div>
-                            <div onClick={() => this.onClickSession('mediacal_histories')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'mediacal_histories') && 'active'}`}>Mediacal Histories</div>
+                            <div onClick={() => this.onClickSession('medical_histories')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'mediacal_histories') && 'active'}`}>Mediacal Histories</div>
                             <div onClick={() => this.onClickSession('medical_studies')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'medical_studies') && 'active'}`}>Medical Studies</div>
-                            <div onClick={() => this.onClickSession('treatments')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'treatments') && 'active'}`}>Treatments</div>
+                            <div onClick={() => this.onClickSession('medical_treatments')} className={`font-semibold py-3 rounded-lg hover:text-gray-800 hover:bg-yellow-200 px-4 cursor-pointer ${(this.props.session == 'treatments') && 'active'}`}>Treatments</div>
                         </div>
                     </div>
                 </div>

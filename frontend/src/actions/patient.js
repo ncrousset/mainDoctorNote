@@ -7,7 +7,8 @@ import {
     GET_ERRORS,
     GET_ALERT,
     DELETE_BACKGROUND,
-    UPDATE_BACKGROUND
+    UPDATE_BACKGROUND,
+    GET_MEDICAL_HISTORIES
 } from './types';
 
 // GET Background
@@ -139,5 +140,20 @@ export const deleteBackground = (background) => (dispatch, getState) => {
                 type: GET_ERRORS,
                 payload: errors
             })
+        })
+}
+
+// GET Medical histories
+export const getMedicalHistories = (patient) => (dispatch, getState) => {
+
+    axios.get(`/api/patient/${patient}/medical-history`, Token.getTokenConfig(getState))
+        .then(response => {
+            dispatch({
+                type: GET_MEDICAL_HISTORIES,
+                payload: response.data.data
+            });
+        }).catch(error => {
+            // dispatch(returnErrors('error', 45))
+            // dispatch({ type: GET_ERRORS })
         })
 }

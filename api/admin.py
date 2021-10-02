@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Patient, Background
+from .models import Patient, Background, MedicalHistory, MedicalStudy, MedicalTreatment
 
 
 class ApiAdmin(admin.ModelAdmin):
@@ -9,3 +9,6 @@ class ApiAdmin(admin.ModelAdmin):
 
 admin.site.register(Patient, ApiAdmin)
 admin.site.register(Background)
+admin.site.register(MedicalHistory)
+admin.site.register(MedicalStudy)
+admin.site.register(MedicalTreatment)
