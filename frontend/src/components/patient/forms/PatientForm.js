@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import PropTypes, { object } from 'prop-types';
 import { addPatient, updatePatient } from '../../../actions/patients'
 import { Redirect } from 'react-router-dom'
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import dayjs from 'dayjs';
 
 export class PatientForm extends Component {
 
@@ -28,8 +30,20 @@ export class PatientForm extends Component {
     onSubmit = event => {
         event.preventDefault();
 
+        let data = this.state
+        let format = 'YYYY-MM-DD'
+
+        if(data.birth_date != null) {
+            data.birth_date =  dayjs(data.birth_date).format(format)
+        }
+
+        if(data.next_appointment != null) {
+            format =+ ' hh:mm A';
+            data.next_appointment =  dayjs(data.next_appointment).format(format)
+        }
+
         if (!this.props.edit) {
-            this.props.addPatient(this.state)
+            this.props.addPatient(data)
                 .then((response) => {
                     this.props.onClose()
                     location.href = `/patients/${response.id}`
@@ -38,7 +52,7 @@ export class PatientForm extends Component {
                     console.log('entro en catch')
                 })
         } else {
-            this.props.updatePatient(this.state)
+            this.props.updatePatient(data)
                 .then((response) => {
                     this.props.onClose()
                     location.href = `/patients/${response.id}`
@@ -51,20 +65,12 @@ export class PatientForm extends Component {
     }
 
     render() {
-        console.log("Entro a render")
         const { first_name, last_name, email, phone,
             insurance, idd, sex, birth_date, next_appointment } = this.state
-        
-        const startDate = new Date()
 
-        console.log("next appoinctment:" + next_appointment)
-
-
-        const setStateDate = (date) => {
-            this.setState({next_appointment: date})
+        const setStateDate = (stateName, date) => {
+            this.setState({[stateName]: date})
         } 
-
-       
 
         return (
             <form action='' onSubmit={this.onSubmit}>
@@ -129,9 +135,21 @@ export class PatientForm extends Component {
                         </div>
                         <div className="px-1 w-1/2">
                             <label className="text-gray-800 font-semibold" htmlFor="birth_date">Birth Date</label>
-                            <input onChange={this.onChange} value={birth_date} className="w-full border border-gray-300 rounded-md p-2 mt-1
+                            <DatePicker 
+                                onChange={(date) => setStateDate('birth_date', date)}
+                                name="birth_date"
+                                id="birth_date"
+                                dateFormat="MM/dd/yyyy"
+                                maxDate={new Date()}
+                                isClearable
+                                selected={ birth_date != null && new Date(birth_date)}
+                                className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none 
-                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="date" name="birth_date" id="birth_date" />
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70"
+                            />
+                            {/* <input onChange={this.onChange} value={birth_date} className="w-full border border-gray-300 rounded-md p-2 mt-1
+                        text-gray-600 focus:outline-none 
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="date" name="birth_date" id="birth_date" /> */}
                         </div>
                     </div>
 
@@ -141,8 +159,7 @@ export class PatientForm extends Component {
                             
                             
                             <DatePicker 
-                                onChange={(date) => setStateDate(date)}
-                                // value={next_appointment}
+                                onChange={(date) => setStateDate('next_appointment', date)}
                                 name="next_appointment" 
                                 id="next_appointment"
                                 selected={ next_appointment != null && new Date(next_appointment)}
