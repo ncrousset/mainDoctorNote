@@ -29,8 +29,17 @@ export class CardPatientDetail extends Component {
         super();
     }
 
-    dateString(data = '') {
-        let dateString = dayjs(data).format('YYYY-MMM-DD hh:mm A')
+    dateString(date = '', hasTime = false) {
+
+        if (date == null || date == '') return ''
+
+        let format = 'YYYY-MMM-DD'
+
+        if(hasTime) {
+            format += ' hh:mm A'
+        }
+
+        let dateString = dayjs(date).format(format)
     
         return dateString
     }
@@ -76,7 +85,7 @@ export class CardPatientDetail extends Component {
                             <label className="font-semibold flex">
                                 <FaCalendarAlt className="relative top-1 mr-1" /> Birth date
                             </label>
-                            <span className="pl-5">{this.props.patient.birth_date}</span>
+                            <span className="pl-5">{ this.dateString(this.props.patient.birth_date) }</span>
                         </li>
                         <li class="px-3 py-1 ">
                             <label className="font-semibold flex">
@@ -106,7 +115,7 @@ export class CardPatientDetail extends Component {
                             <label className="font-semibold flex">
                                 <FaCalendarAlt className="relative top-1 mr-1" /> Next appointment
                             </label>
-                            <span className="pl-5">{ this.dateString(this.props.patient.next_appointment) } </span>
+                            <span className="pl-5">{ this.dateString(this.props.patient.next_appointment, true) } </span>
                         </li>
                         <li class="px-3 py-1 ">
                             <label className="font-semibold flex">
