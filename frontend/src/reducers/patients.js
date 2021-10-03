@@ -28,7 +28,13 @@ export default function (state = initialState, action) {
                     patient => patient.id !== action.payload
                 )
             };
-        case UPDATE_PATIENT:
+        // case UPDATE_PATIENT:
+        //     return {
+        //         ...state,
+        //         patients: state.patients.map(patient => {
+        //             return patient.id !== action.payload.id ? patient : action.payload
+        //         })
+        //     };
         case ADD_PATIENT:
             return {
                 ...state,

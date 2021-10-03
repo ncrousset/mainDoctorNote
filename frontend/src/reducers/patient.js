@@ -16,7 +16,8 @@ import {
     GET_MEDICAL_TREATMENTS,
     ADD_MEDICAL_TREATMENT,
     UPDATE_MEDICAL_TREATMENT,
-    DELETE_MEDICAL_TREATMENT
+    DELETE_MEDICAL_TREATMENT,
+    UPDATE_PATIENT
 } from '../actions/types'
 
 const initialState = {
@@ -30,6 +31,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case UPDATE_PATIENT:
         case GET_PATIENT:
             return {
                 ...state,
