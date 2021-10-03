@@ -55,7 +55,7 @@ export class CardPatientDetail extends Component {
             <div className="containter w-full mx-auto">
                 <div className="bg-white  p-8 rounded-lg shadow-md relative hover:shadow-lg transition duration-500">
                     <h2 className="text-xl text-gray-800 font-semibold mb-3 flex">
-                        <FaUserAlt className="mr-2" /><span> {this.props.patient.full_name} </span>
+                        <FaUserAlt className="mr-2" /><span className="capitalize"> {this.props.patient.full_name} </span>
                     </h2>
                     <ul className="grid grid-cols-3 gap-3">
                         <li class="px-3 py-1 ">
