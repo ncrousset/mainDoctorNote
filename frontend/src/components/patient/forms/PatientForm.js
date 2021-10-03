@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { addPatient, updatePatient } from '../../../actions/patients'
 import { Redirect } from 'react-router-dom'
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 export class PatientForm extends Component {
 
     state = this.props.patient;
@@ -48,8 +51,20 @@ export class PatientForm extends Component {
     }
 
     render() {
+        console.log("Entro a render")
         const { first_name, last_name, email, phone,
             insurance, idd, sex, birth_date, next_appointment } = this.state
+        
+        const startDate = new Date()
+
+        console.log("next appoinctment:" + next_appointment)
+
+
+        const setStateDate = (date) => {
+            this.setState({next_appointment: date})
+        } 
+
+       
 
         return (
             <form action='' onSubmit={this.onSubmit}>
@@ -123,9 +138,28 @@ export class PatientForm extends Component {
                     <div className="flex justify-between py-2">
                         <div className="px-1 w-1/2">
                             <label className="text-gray-800 font-semibold" htmlFor="next_appointment">Next appointment</label>
-                            <input onChange={this.onChange} value={next_appointment} className="w-full border border-gray-300 rounded-md p-2 mt-1
+                            
+                            
+                            <DatePicker 
+                                onChange={(date) => setStateDate(date)}
+                                // value={next_appointment}
+                                name="next_appointment" 
+                                id="next_appointment"
+                                selected={ next_appointment != null && new Date(next_appointment)}
+                                showTimeSelect
+                                minDate={new Date()}
+                                timeFormat="HH:mm"
+                                timeIntervals={30}
+                                timeCaption="time"
+                                dateFormat="MM/dd/yyyy h:mm aa"
+                                isClearable
+                                className="w-full border border-gray-300 rounded-md p-2 mt-1
+                                text-gray-600 focus:outline-none 
+                                focus:ring-2 focus:ring-green-700 focus:ring-opacity-70"
+                            />
+                            {/* <input onChange={this.onChange} value={next_appointment} className="w-full border border-gray-300 rounded-md p-2 mt-1
                         text-gray-600 focus:outline-none  
-                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="datetime-local" name="next_appointment" id="next_appointment" />
+                        focus:ring-2 focus:ring-green-700 focus:ring-opacity-70" type="datetime-local" name="next_appointment" id="next_appointment" /> */}
                         </div>
                     </div>
                 </div>
