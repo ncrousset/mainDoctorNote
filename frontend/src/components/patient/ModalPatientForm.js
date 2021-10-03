@@ -47,7 +47,7 @@ export default class ModalPatientForm extends Component {
                                 <div className="text-gray-900 font-medium text-lg">{this.props.title}</div>
                             </div>
 
-                            <div className="">
+                            <div className="w-full">
                                 <PatientForm onClose={this.onClose} patient={this.patient} edit={this.props.edit} />
                             </div>
                         </div>

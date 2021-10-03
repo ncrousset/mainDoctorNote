@@ -35,6 +35,16 @@ export class ModalFormAction extends Component {
 
     }
 
+    componentDidMount() {
+        let body = document.getElementsByTagName('body')[0];
+        body.classList.add('overflow-hidden')
+    }
+
+    componentWillUnmount() {
+        let body = document.getElementsByTagName('body')[0];
+        body.classList.remove('overflow-hidden')
+    }
+
     onClose = () => {
         this.props.onClose()
     }
