@@ -55,7 +55,6 @@ export class PatientForm extends Component {
             this.props.updatePatient(data)
                 .then((response) => {
                     this.props.onClose()
-                    location.href = `/patients/${response.id}`
                 })
                 .catch(error => {
                     console.log('entro en catch')

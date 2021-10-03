@@ -13,6 +13,7 @@ import {
     GET_PAGINATOR_PATIENTS,
     SEARCH_PATIENTS,
     GET_SESSION_PATIENT,
+    GET_ALERT,
 } from './types';
 
 import axios from 'axios';
@@ -70,6 +71,18 @@ export const deletePatient = (id) => (dispatch, getState) => {
                     type: DELETE_PATIENT,
                     payload: id
                 });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Patient Deleted",
+                    status: response.status
+                }
+    
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
+
                 resolve(response)
             }).catch(error => {
                 dispatch(returnErrors(error.response.data.detail, error.response.status))
@@ -89,6 +102,17 @@ export const addPatient = (patient) => (dispatch, getState) => {
                     type: ADD_PATIENT,
                     payload: response.data
                 });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Patient Added",
+                    status: response.status
+                }
+    
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
 
                 resolve(response.data)
 
@@ -120,6 +144,17 @@ export const updatePatient = (patient) => (dispatch, getState) => {
                     type: UPDATE_PATIENT,
                     payload: response.data
                 });
+
+                const alert = {
+                    type: 'str',
+                    msg:  "Patient updated",
+                    status: response.status
+                }
+    
+                dispatch({
+                    type: GET_ALERT,
+                    payload: alert
+                })
 
                 resolve(response.data)
 
