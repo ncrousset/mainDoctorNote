@@ -48,6 +48,8 @@ export class CardPatientDetail extends Component {
                     location.pathname = '/patients'
                 })
         }
+
+        return false
     }
 
     render() {

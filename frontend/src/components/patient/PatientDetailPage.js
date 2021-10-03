@@ -91,7 +91,7 @@ export class PatientDetailPage extends Component {
 
                 </section>
 
-                {this.state.show && <ModalPatientForm onClose={() => this.hideModalForm()} patient={this.props.patient} title="Edit patient" edit={true} />}
+                {this.state.show && <ModalPatientForm className="z-30" onClose={() => this.hideModalForm()} patient={this.props.patient} title="Edit patient" edit={true} />}
 
             </Main>
         )
