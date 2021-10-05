@@ -3,46 +3,53 @@ from rest_framework import serializers
 from .models import MedicalTreatment, Patient, Background, MedicalHistory, MedicalStudy
 from django.contrib.auth.models import User
 
+
 class MedicalTreatmentSerialize(serializers.ModelSerializer):
     class Meta:
         model = MedicalTreatment
-        fields = ('id', 'title' , 'content', 'date', 'patient', 'deleted', 'deleted_date')
+        fields = ('id', 'title', 'content', 'date',
+                  'patient', 'deleted', 'deleted_date')
         extra_kwargs = {'patient': {'required': False}}
 
     def create(self, validated_data):
         return MedicalTreatment.objects.create(**validated_data)
 
+
 class MedicalStudySerialize(serializers.ModelSerializer):
     class Meta:
         model = MedicalStudy
-        fields = ('id', 'title' , 'content', 'date', 'patient', 'deleted', 'deleted_date')
+        fields = ('id', 'title', 'content', 'date',
+                  'patient', 'deleted', 'deleted_date')
         extra_kwargs = {'patient': {'required': False}}
 
     def create(self, validated_data):
         return MedicalStudy.objects.create(**validated_data)
 
+
 class BackgroundSerialize(serializers.ModelSerializer):
     class Meta:
         model = Background
-        fields = ('id', 'title' , 'content', 'date', 'patient', 'deleted', 'deleted_date')
+        fields = ('id', 'title', 'content', 'date',
+                  'patient', 'deleted', 'deleted_date')
         extra_kwargs = {'patient': {'required': False}}
 
     def create(self, validated_data):
         return Background.objects.create(**validated_data)
 
+
 class MedicalHistorySerialize(serializers.ModelSerializer):
     class Meta:
         model = MedicalHistory
-        fields = ('id', 'title' , 'content', 'date', 'patient', 'deleted', 'deleted_date')
+        fields = ('id', 'title', 'content', 'date',
+                  'patient', 'deleted', 'deleted_date')
         extra_kwargs = {'patient': {'required': False}}
 
 
 class PatientSerialize(serializers.ModelSerializer):
-    def validate(self, data):
-        if data.get('user_id', None) == None:
-            data['user_id'] = User.objects.last()
-
-        return data
+    # def validate(self, data):
+    #     if data.get('user_id', None) == None:
+    #         data['user_id'] = User.objects.last()
+    #     return data
 
     class Meta:
         model = Patient
@@ -51,3 +58,4 @@ class PatientSerialize(serializers.ModelSerializer):
                   'deleted_date', 'user_id')
         extra_kwargs = {'user_id': {'required': False}}
         validators = []
+

@@ -177,7 +177,7 @@ class PatientDetailTest(TestCase):
 
     def test_user_can_edit_patient(self):
         data = {
-            'first_name': 'Pedro 2',
+            'first_name': 'Pedro update',
             'last_name': 'Lopez',
             'birth_date': '2001-02-15',
             'email': 'estephany@gmail.com',
@@ -191,5 +191,7 @@ class PatientDetailTest(TestCase):
                                    content_type=MULTIPART_CONTENT,
                                    data=encode_multipart(BOUNDARY, data),)
 
+        patient_last = Patient.objects.get(pk=self.patient.id)
+
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.data['first_name'], 'Pedro 2')
+        self.assertEqual(patient_last.first_name, 'Pedro update')

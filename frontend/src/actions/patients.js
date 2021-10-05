@@ -138,7 +138,7 @@ export const addPatient = (patient) => (dispatch, getState) => {
 export const updatePatient = (patient) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         axios
-            .put(`/api/patient/${patient.id}/`, patient, Token.getTokenConfig(getState))
+            .put(`/api/patient/${patient.id}`, patient, Token.getTokenConfig(getState))
             .then(response => {
                 dispatch({
                     type: UPDATE_PATIENT,

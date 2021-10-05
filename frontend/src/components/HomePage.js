@@ -4,6 +4,7 @@ import PatientListPage from "./patient/PatientListPage";
 import LoginPage from "./account/LoginPage";
 import RegisterPage from "./account/RegisterPage";
 import PrivateRoute from "./common/PrivateRoute";
+import Calendar from "./calendar/Calendar";
 // import { Patient } from "./patient/Patient";
 import PatientDetailPage from "./patient/PatientDetailPage";
 import store from '../store';
@@ -32,6 +33,7 @@ export default class HomePage extends Component {
                     <Route exact path='/'><p>This is the home page</p></Route>
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
+                    <PrivateRoute exact path='/calendar' component={Calendar} ></PrivateRoute>
                     <PrivateRoute exact path='/patients' component={PatientListPage} ></PrivateRoute>
                     <PrivateRoute path='/patients/:id' component={PatientDetailPage}  ></PrivateRoute>
                 </Switch>

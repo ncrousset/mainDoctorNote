@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { logout } from '../../actions/auth'
 
-import {FaUserInjured, FaCalendarAlt, FaFile} from 'react-icons/fa'
-import {BsFillGearFill} from 'react-icons/bs'
+import { FaUserInjured, FaCalendarAlt, FaFile } from 'react-icons/fa'
+import { BsFillGearFill } from 'react-icons/bs'
 
 
 import {
@@ -41,21 +41,23 @@ export class Sidebar extends Component {
 
                     <section className="mt-10">
                         <ul className="space-y-5">
-                            <li className="flex items-center cursor-pointer p-1 rounded-md text-white hover:text-gray-700 hover:bg-yellow-200">
-                                <span className="h-8 w-8 flex items-center justify-center">
-                                   <FaCalendarAlt />
-                                    
-                                </span>
-                                <h4 className="font-medium  ml-1">Calendar</h4>
-                            </li>
 
+                            <Link className="flex items-center " to="/calendar">
+                                <li className="flex items-center w-full cursor-pointer p-1 rounded-md text-white hover:text-gray-700 hover:bg-yellow-200">
+                                    <span className="h-8 w-8 flex items-center justify-center">
+                                        <FaCalendarAlt />
+
+                                    </span>
+                                    <h4 className="font-medium  ml-1">Calendar</h4>
+                                </li>
+                            </Link>
 
                             <Link className="flex items-center " to="/patients/">
                                 <li className="flex items-center  cursor-pointer  w-full p-1 rounded-md text-white hover:text-gray-700 hover:bg-yellow-200 active">
                                     <span className="h-8 w-8 flex items-center justify-center">
-                                        
+
                                         <FaUserInjured />
-                                       
+
                                     </span>
                                     <h4 className=" ml-1">Patients</h4>
 
@@ -65,7 +67,7 @@ export class Sidebar extends Component {
                             <li className="flex items-center cursor-pointer p-1 rounded-md text-white hover:text-gray-700 hover:bg-yellow-200">
                                 <span className="h-8 w-8 flex items-center justify-center">
                                     {/* <FileTextIcon size='18' color="#ffffff" className="font-medium ml-1" /> */}
-                                <FaFile />
+                                    <FaFile />
                                 </span>
                                 <h4 className=" ml-1">Document</h4>
                             </li>
@@ -86,12 +88,12 @@ export class Sidebar extends Component {
 
                     <ul className="absolute bottom-0 left-0 mb-3 space-y-3 mt-auto text-white">
                         <a href="#" onClick={this.props.logout}>
-                        <li className="flex items-center">
-                            <span className="h-8 w-8 flex items-center justify-center">
-                                <ArrowOutIcon size='18' color="#ffffff" className="font-medium text-white ml-1" />
-                            </span>
-                            <h4 className="font-medium ml-1">Logout</h4>
-                        </li>
+                            <li className="flex items-center">
+                                <span className="h-8 w-8 flex items-center justify-center">
+                                    <ArrowOutIcon size='18' color="#ffffff" className="font-medium text-white ml-1" />
+                                </span>
+                                <h4 className="font-medium ml-1">Logout</h4>
+                            </li>
                         </a>
                     </ul>
                 </div>
@@ -104,4 +106,4 @@ const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, {logout})(Sidebar)
+export default connect(mapStateToProps, { logout })(Sidebar)
