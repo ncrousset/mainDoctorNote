@@ -5,6 +5,7 @@ import LoginPage from "./account/LoginPage";
 import RegisterPage from "./account/RegisterPage";
 import PrivateRoute from "./common/PrivateRoute";
 import Calendar from "./calendar/Calendar";
+import Landing from "./landing/Landing";
 // import { Patient } from "./patient/Patient";
 import PatientDetailPage from "./patient/PatientDetailPage";
 import store from '../store';
@@ -30,7 +31,7 @@ export default class HomePage extends Component {
         return (
             <Router>
                 <Switch>
-                    <Route exact path='/'><p>This is the home page</p></Route>
+                    <Route exact path='/' component={Landing} ></Route>
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
                     <PrivateRoute exact path='/calendar' component={Calendar} ></PrivateRoute>
