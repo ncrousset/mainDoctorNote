@@ -1,9 +1,14 @@
 db.sqlite3
 frontend/node_modules
+frontend/package-lock.json
 .env
+
+frontend/static/frontend/main.js
+frontend/static/frontend/main.js.LICENSE.txt
 
 # Byte-compiled / optimized / DLL files
 **/__pycache__/
+static/
 .vscode
 *.py[cod]
 *$py.class
