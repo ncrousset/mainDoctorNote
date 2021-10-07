@@ -49,7 +49,32 @@ export const login = (username, password) => dispatch => {
                 payload: response.data
             })
         }).catch(error => {
-            console.log(window.location.pathname)
+            dispatch(returnErrors(error.response.data, error.response.status))
+            dispatch({ type: LOGIN_FAIL })
+        })
+}
+
+
+// register USER
+export const register = (username, password, email) => dispatch => {
+
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    // Request Body
+    const body = JSON.stringify({ username, password, email })
+
+    axios.post('/api/auth/register', body, config)
+        .then(response => {
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: response.data
+            })
+        }).catch(error => {
             dispatch(returnErrors(error.response.data, error.response.status))
             dispatch({ type: LOGIN_FAIL })
         })

@@ -60,12 +60,12 @@ class PatientList(generics.ListAPIView):
                 search=SearchVector(
                     "first_name", "last_name", "insurance", "idd")
             ).filter(
-                deleted=False).filter(
+                deleted=False, user_id=request.user).filter(
                 Q(search=SearchQuery(search)) | Q(search__icontains=search)).order_by('next_appointment')
 
         else:
             patients = Patient.objects.filter(
-                deleted=False).order_by('next_appointment')
+                deleted=False, user_id=request.user).order_by('next_appointment')
 
         page = 1
         if 'p' in request.GET and type(int(request.GET['p'])) == type(0):

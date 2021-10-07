@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { register } from '../../../actions/auth';
 
 export class Register extends Component {
 
@@ -10,9 +13,14 @@ export class Register extends Component {
         password2: '',
     }
 
+    static propTypes = {
+        register: PropTypes.func.isRequired,
+        isAuthenticated: PropTypes.bool
+    }
+
     onSubmit = event => {
-        event.preventDefault();
-        console.log('submit');
+        event.preventDefault()
+        this.props.register(this.state.username, this.state.password, this.state.email)
     }
 
     onChange = event => this.setState({
@@ -20,6 +28,10 @@ export class Register extends Component {
     })
 
     render() {
+        if (this.props.isAuthenticated) {
+            return <Redirect to="/patients" />
+        }
+
         const { username, email, password, password2 } = this.state
         return (
             < form method="post" action="#" className="mt-10" onSubmit={this.onSubmit} >
@@ -52,7 +64,7 @@ export class Register extends Component {
                 </div>
                 <div class="mt-7">
                     <input
-                        type="password2"
+                        type="password"
                         placeholder="Confirmal Contraseña"
                         name="password2"
                         onChange={this.onChange}
@@ -82,4 +94,10 @@ export class Register extends Component {
     }
 }
 
-export default Register
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps, { register })(Register)
+
