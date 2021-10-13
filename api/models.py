@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import User
+from accounts.models import CustomUser
 from django.core.validators import RegexValidator
 
 
@@ -20,7 +20,7 @@ class Patient(models.Model):
     phone = models.CharField(max_length=20, blank=True, null=True)
     sex = models.CharField(max_length=15, choices=SEX)
     next_appointment = models.DateTimeField(blank=True, null=True)
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     deleted = models.BooleanField(default=False, blank=True, null=True)
     deleted_date = models.DateTimeField(blank=True, null=True)

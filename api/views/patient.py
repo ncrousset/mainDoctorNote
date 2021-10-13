@@ -39,7 +39,7 @@ def faker_patients_for_test(self):
             idd=random.randrange(1000000, 9999999),
             phone=faker.phone_number()[:12],
             sex=random.choice(['m', 'f', 'o']),
-            user_id=user
+            user=user
         )
 
     return HttpResponse("ok")
