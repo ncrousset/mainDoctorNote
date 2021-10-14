@@ -22,7 +22,7 @@ def create_patients_for_test(user):
         idd=random.randrange(1000000, 9999999),
         phone=faker.phone_number()[:12],
         sex=random.choice(['m', 'f', 'o']),
-        user_id=user
+        user=user
     )
 
 
@@ -61,7 +61,7 @@ class PatientListTest(TestCase):
             idd='545456',
             phone='5454545',
             sex='m',
-            user_id=self.user
+            user=self.user
         )
 
         for _ in range(20):
@@ -105,7 +105,7 @@ class PatientListTest(TestCase):
             phone='5454545',
             sex='m',
             next_appointment=timezone.now(),
-            user_id=self.user
+            user=self.user
         )
 
         response = self.client.get(reverse('patients') + '?p=1')
@@ -162,7 +162,7 @@ class PatientDetailTest(TestCase):
             idd='545456',
             phone='5454545',
             sex='m',
-            user_id=self.user
+            user=self.user
         )
 
     def test_user_can_see_detail_patient(self):

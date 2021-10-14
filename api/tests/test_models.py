@@ -15,7 +15,7 @@ def create_patient(user):
             first_name='Natanael',
             last_name='Acosta',
             sex='m',
-            user_id=user)
+            user=user)
 
 class PatientTest(TestCase):
 
