@@ -1,5 +1,8 @@
 from pathlib import Path
 
+import mimetypes
+
+
 import environ
 import os
 
@@ -16,10 +19,9 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = bool(env("DEBUG"))
 
 ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
-
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
@@ -128,6 +130,8 @@ DATE_INPUT_FORMATS = ['%m/%d/%Y']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
+
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
