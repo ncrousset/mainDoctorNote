@@ -28,10 +28,17 @@ def client_local():
 
     return client
 
+def create_user(username = 'testuser', email = 'testuser@gmail.com'):
+    return get_user_model().objects.create_user(
+            username=username,
+            email=email,
+            password='test')
+
+
 def create_patient(user, deleted=False):
      return Patient.objects.create(
             first_name='Natanael', last_name='Acosta', 
-            sex='m', user_id=user, deleted=deleted)
+            sex='m', user=user, deleted=deleted)
 
 def create_background(patient, deleted=False, date='2019-12'):
     return Background.objects.create(
@@ -41,14 +48,8 @@ def create_background(patient, deleted=False, date='2019-12'):
 class BackgroundListCreateTest(TestCase):
     
     def setUp(self):
-        self.user = get_user_model().objects.create_user(
-            username='testuser',
-            email='testuser@gmail.com',
-            password='test'
-        )
-
+        self.user = create_user()
         self.client = client_local()
-
         self.patient = create_patient(self.user)
         create_background(self.patient)
 
@@ -140,33 +141,15 @@ class BackgroundDetailTest(TestCase):
     
     def setUp(self):
 
-        self.user = get_user_model().objects.create_user(
-            username='testuser',
-            email='testuser@gmail.com',
-            password='test'
-        )
+        self.user = create_user()
 
-        other_user = get_user_model().objects.create_user(
-            username='other',
-            email='testuser@gmail.com',
-            password='test'
-        )
+        other_user = create_user('other', 'other@gmail.com')
 
         self.client = client_local()
 
-        self.patient = Patient.objects.create(
-            first_name='Natanael',
-            last_name='Acosta',
-            sex='m',
-            user_id=self.user
-        )
+        self.patient = create_patient(self.user)
 
-        other_patient = Patient.objects.create(
-            first_name='Natanael',
-            last_name='Acosta',
-            sex='m',
-            user_id=other_user
-        )
+        other_patient = create_patient(other_user)
 
         self.background = Background.objects.create(
             title='test',
