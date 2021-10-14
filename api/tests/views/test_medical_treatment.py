@@ -28,7 +28,7 @@ def create_user(username = 'testuser', email='email'):
 def create_patient(user, deleted=False):
      return Patient.objects.create(
             first_name='Natanael', last_name='Acosta', 
-            sex='m', user_id=user, deleted=deleted)
+            sex='m', user=user, deleted=deleted)
 
 def create_medical_treatment(patient, deleted=False, date='2019-12-30'):
     return MedicalTreatment.objects.create(
