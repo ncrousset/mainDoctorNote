@@ -36,3 +36,12 @@ class LoginSerializer(serializers.Serializer):
         if user and user.is_active:
             return user
         raise serializers.ValidationError("Incorrect Credentials")
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+class ChangerPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(max_length=20, min_length=5)
+    token = serializers.CharField(max_length=40)
