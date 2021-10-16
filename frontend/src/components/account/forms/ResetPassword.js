@@ -12,14 +12,16 @@ export class ResetPassword extends Component {
 
     static propTypes = {
         resetPassword: PropTypes.func.isRequired,
-        isAuthenticated: PropTypes.bool
+        isAuthenticated: PropTypes.bool,
+        onSucces: PropTypes.func
     }
 
     onSubmit = event => {
         event.preventDefault()
         this.props.resetPassword(this.state.email)
             .then(response => {
-                
+                console.log("succes")
+                this.props.onSucces()
             })
 
     }

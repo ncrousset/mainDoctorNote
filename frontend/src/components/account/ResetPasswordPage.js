@@ -3,11 +3,20 @@ import MainSimple from '../layout/MainSimple';
 import DecoratorsCard from '../layout/DecoratorsCard';
 import Label from './Label';
 import ResetPassword from './forms/ResetPassword';
+import SuccessResetPassword from './SuccessResetPassword';
 
 export class ResetPasswordPage extends Component {
 
+    state = {
+        succes: false 
+    }
+
+    onSucces = () => {
+        this.setState({succes: true})
+    }
 
     render() {
+        const succes = this.state.succes
         return (
             <MainSimple>
                 <div className="relative sm:max-w-sm w-full ">
@@ -15,10 +24,18 @@ export class ResetPasswordPage extends Component {
                     <DecoratorsCard bgColor="bg-yellow-200" rotate="rotate-6" />
 
                     <div className="relative w-full rounded-3xl px-6 py-4 shadow-md bg-white">
-                        <Label>Reset Password</Label>
+                        <Label>
+                            { succes
+                              ? "Success Password"
+                              : "Reset Password"
+                            }
+                            
+                        </Label>
 
-
-                        <ResetPassword />
+                        {succes
+                            ? <SuccessResetPassword />
+                            : <ResetPassword onSucces= {() => this.onSucces()} />
+                        }
                     </div>
 
                 </div>
