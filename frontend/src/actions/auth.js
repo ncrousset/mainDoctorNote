@@ -9,12 +9,16 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT_SUCCESS
+    LOGOUT_SUCCESS,
+    GET_ERRORS
 } from "./types";
 
 // CHECK TOKEN & LOAD USER
 export const loadUser = () => (dispatch, getState) => {
     // User Loading
+
+    console.log("load User")
+
     dispatch({ type: USER_LOADING });
 
     axios.get('/api/auth/user', Token.getTokenConfig(getState))
@@ -91,4 +95,39 @@ export const logout = () => (dispatch, getState) => {
         }).catch(error => {
             dispatch(returnErrors(error.response.data, error.response.status))
         })
+}
+
+// Reset Password
+export const resetPassword = (email) => (dispatch) => {
+
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    // Request Body
+    const body = JSON.stringify({ email })
+
+    return new Promise((resolve, reject) => {
+        axios.post('/api/auth/reset_password', body, config)
+            .then(response => {
+                resolve(response)
+            }).catch(error => {
+                const errors = {
+                    type: 'str',
+                    msg: error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
+
 }

@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 import PatientListPage from "./patient/PatientListPage";
 import LoginPage from "./account/LoginPage";
 import RegisterPage from "./account/RegisterPage";
+import ResetPasswordPage from "./account/ResetPasswordPage";
 import PrivateRoute from "./common/PrivateRoute";
 import Calendar from "./calendar/Calendar";
 import Landing from "./landing/Landing";
@@ -15,16 +18,21 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link, Redirect
 } from "react-router-dom";
 
-export default class HomePage extends Component {
+export class HomePage extends Component {
     constructor(props) {
         super(props);
     }
 
+    static propTypes = {
+        isAuthenticated: PropTypes.bool
+    }
+
     componentDidMount() {
-        store.dispatch(loadUser());
+        if(this.props.isAuthenticated) {
+            store.dispatch(loadUser());
+        }
     }
 
     render() {
@@ -34,6 +42,7 @@ export default class HomePage extends Component {
                     <Route exact path='/' component={Landing} ></Route>
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
+                    <Route path='/accounts/reset_password' component={ResetPasswordPage}></Route>
                     <PrivateRoute exact path='/calendar' component={Calendar} ></PrivateRoute>
                     <PrivateRoute exact path='/patients' component={PatientListPage} ></PrivateRoute>
                     <PrivateRoute path='/patients/:id' component={PatientDetailPage}  ></PrivateRoute>
@@ -42,3 +51,9 @@ export default class HomePage extends Component {
         );
     }
 }
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(mapStateToProps)(HomePage)

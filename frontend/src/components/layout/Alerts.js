@@ -14,13 +14,17 @@ export class Alerts extends Component {
         const { error, alert } = this.props
 
         if (error !== prevProps.error) {
-        
-            if(typeof error.msg == 'object') {
+
+            if (typeof error.msg == 'object') {
                 Object.entries(error.msg).map(msg => {
                     toast.error(msg.join(': '), {
                         position: toast.POSITION.TOP_CENTER
                     });
                 })
+            } else if (typeof error.msg == 'string') {
+                toast.error(error.msg, {
+                    position: toast.POSITION.TOP_CENTER
+                });
             }
         }
 
@@ -33,8 +37,8 @@ export class Alerts extends Component {
     }
 
     render() {
-        return (
-            <ToastContainer />
+        return ( <
+            ToastContainer / >
         )
     }
 }

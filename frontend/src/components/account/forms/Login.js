@@ -61,9 +61,10 @@ export class Login extends Component {
                     </label>
 
                     <div className="w-full text-right">
-                        <a className="underline text-sm text-gray-600 hover:text-gray-900" href="#">
-                            ¿Olvidó su contraseña?
-                        </a>
+                    <Link className="underline text-sm text-gray-600 hover:text-gray-900" to="/accounts/reset_password">
+                    ¿Olvidó su contraseña?
+                    </Link>
+                      
                     </div>
                 </div>
 

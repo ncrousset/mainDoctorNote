@@ -17,14 +17,12 @@ export default class App extends Component {
     }
 
     componentDidMount() {
-        store.dispatch(loadUser());
+      
     }
 
     render() {
         return <div>
             <Provider store={store}>
-               
-                {/* <ToastContainer /> */}
                 <HomePage />
             </Provider>
         </div>;

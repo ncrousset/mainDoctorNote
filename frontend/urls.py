@@ -9,4 +9,5 @@ urlpatterns = [
     path('patients/create', index),
     path('accounts/login/', index),
     path('accounts/register/', index),
+    path('accounts/reset_password/', index),
 ]

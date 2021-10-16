@@ -86,7 +86,7 @@ class ResetPasswordAPI(generics.GenericAPIView):
                 return Response('Ok')
 
             except CustomUser.DoesNotExist:
-                return Response("No exist", status=status.HTTP_400_BAD_REQUEST)
+                return Response("There is no user with this email", status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.validated_data, status=status.HTTP_400_BAD_REQUEST) 
 
