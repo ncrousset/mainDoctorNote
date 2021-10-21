@@ -3,11 +3,13 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { resetPassword } from '../../../actions/auth';
+import { FaSpinner } from 'react-icons/fa'
 
 export class ResetPassword extends Component {
 
     state = {
         email: '',
+        clickSubmit: false
     }
 
     static propTypes = {
@@ -18,9 +20,9 @@ export class ResetPassword extends Component {
 
     onSubmit = event => {
         event.preventDefault()
+        this.setState({clickSubmit: true})
         this.props.resetPassword(this.state.email)
             .then(response => {
-                console.log("succes")
                 this.props.onSucces()
             })
 
@@ -35,6 +37,8 @@ export class ResetPassword extends Component {
             return <Redirect to="/patients" />
         }
 
+        const clickSubmit = this.state.clickSubmit
+
         return (
             <form method="post" action="#" className="mt-10" onSubmit={this.onSubmit} >
                 <div class="mt-7">
@@ -48,8 +52,11 @@ export class ResetPassword extends Component {
                 </div>
 
                 <div className="mt-7">
-                    <button type="submit" className="bg-green-500 w-full py-3 rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
-                        Reset
+                    <button type="submit" 
+                        disabled={clickSubmit}
+                        className="bg-green-500 w-full py-3  rounded-xl text-white shadow-xl hover:shadow-inner focus:outline-none transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">
+                         { clickSubmit 
+                         ? <FaSpinner className="animate-spin ml-auto mr-auto " /> : 'Reset' }
                     </button>
                 </div>
 

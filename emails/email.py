@@ -10,7 +10,7 @@ class EmailResetPassword():
         context = {
             'username': user.username,
             'email': user.email,
-            'reset_password_url': str(BASE_URL) + "changer/reset_password/" + token
+            'reset_password_url': str(BASE_URL) + "accounts/changer_password/" + token
         }
 
         email_html_message = render_to_string('emails/user_reset_password.html', context)

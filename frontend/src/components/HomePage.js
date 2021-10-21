@@ -43,6 +43,7 @@ export class HomePage extends Component {
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
                     <Route path='/accounts/reset_password' component={ResetPasswordPage}></Route>
+                    <Route path='/accounts/changer_password/:token' component={ResetPasswordPage}></Route>
                     <PrivateRoute exact path='/calendar' component={Calendar} ></PrivateRoute>
                     <PrivateRoute exact path='/patients' component={PatientListPage} ></PrivateRoute>
                     <PrivateRoute path='/patients/:id' component={PatientDetailPage}  ></PrivateRoute>
