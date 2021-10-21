@@ -100,14 +100,11 @@ class ChangerPasswordAPI(generics.GenericAPIView):
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
-            email = serializer.validated_data['email']
+            token = serializer.validated_data['token']
 
             try:
-                user = CustomUser.objects.get(email=email, is_active=1)
-
-                if user.reset_password_token != serializer.validated_data['token']:
-                    return Response("Token invalid", status=status.HTTP_400_BAD_REQUEST)
-
+                user = CustomUser.objects.get(reset_password_token=token, is_active=1)
+                
                 user.reset_password_token = None
                 user.reset_password_datetime = None
 

@@ -1,11 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+} from "react-router-dom";
 
 import PatientListPage from "./patient/PatientListPage";
 import LoginPage from "./account/LoginPage";
 import RegisterPage from "./account/RegisterPage";
 import ResetPasswordPage from "./account/ResetPasswordPage";
+import ChangerPasswordPage from "./account/ChangerPasswordPage";
+
 import PrivateRoute from "./common/PrivateRoute";
 import Calendar from "./calendar/Calendar";
 import Landing from "./landing/Landing";
@@ -14,11 +21,7 @@ import PatientDetailPage from "./patient/PatientDetailPage";
 import store from '../store';
 import { loadUser } from '../actions/auth';
 
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
+
 
 export class HomePage extends Component {
     constructor(props) {
@@ -43,7 +46,7 @@ export class HomePage extends Component {
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
                     <Route path='/accounts/reset_password' component={ResetPasswordPage}></Route>
-                    <Route path='/accounts/changer_password/:token' component={ResetPasswordPage}></Route>
+                    <Route path="/accounts/changer_password/:token" component={ChangerPasswordPage}></Route>
                     <PrivateRoute exact path='/calendar' component={Calendar} ></PrivateRoute>
                     <PrivateRoute exact path='/patients' component={PatientListPage} ></PrivateRoute>
                     <PrivateRoute path='/patients/:id' component={PatientDetailPage}  ></PrivateRoute>

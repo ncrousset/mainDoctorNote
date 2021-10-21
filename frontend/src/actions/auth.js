@@ -131,3 +131,38 @@ export const resetPassword = (email) => (dispatch) => {
     })
 
 }
+
+// Reset Password
+export const changerPassword = (token, password) => (dispatch) => {
+
+    // Headers
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    // Request Body
+    const body = JSON.stringify({ token, password })
+
+    return new Promise((resolve, reject) => {
+        axios.post('/api/auth/changer_password', body, config)
+            .then(response => {
+                resolve(response)
+            }).catch(error => {
+                const errors = {
+                    type: 'str',
+                    msg: error.response.data,
+                    status: error.response.status
+                }
+
+                dispatch({
+                    type: GET_ERRORS,
+                    payload: errors
+                })
+
+                reject()
+            })
+    })
+
+}

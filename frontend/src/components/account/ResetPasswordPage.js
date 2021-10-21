@@ -33,7 +33,7 @@ export class ResetPasswordPage extends Component {
                         </Label>
 
                         {succes
-                            ? <SuccessResetPassword />
+                            ? <SuccessResetPassword text="We have sent you an email to modify the password" />
                             : <ResetPassword onSucces= {() => this.onSucces()} />
                         }
                     </div>
