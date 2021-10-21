@@ -64,6 +64,7 @@ class ResetPasswordAPITest(TestCase):
 
     def test_cannot_reset_password_user_inactive(self):
         create_user('test', 'test@gmail.com', 0)
+        
         data = {
             'email': 'test@gmail.com'
         }
@@ -73,7 +74,7 @@ class ResetPasswordAPITest(TestCase):
         data = response.json()
 
         self.assertEqual(response.status_code, 400)
-        self.assertEqual(data, 'No exist')
+        self.assertEqual(data, 'There is no user with this email')
 
     def test_validate_token_reset_password(self):
         token = self.user.reset_password()

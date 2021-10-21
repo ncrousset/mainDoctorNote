@@ -104,7 +104,6 @@ class ChangerPasswordAPI(generics.GenericAPIView):
 
             try:
                 user = CustomUser.objects.get(reset_password_token=token, is_active=1)
-                
                 user.reset_password_token = None
                 user.reset_password_datetime = None
 
