@@ -7,15 +7,14 @@ const Main = (props) => {
     return (
         <Fragment>
             <Alerts />
-
             <div className="body-app">
 
                 <Sidebar />
                 <div>
                     <Header />
-                    <div className="container">
+                    {/* <div className="container">
                         {props.children}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </Fragment>

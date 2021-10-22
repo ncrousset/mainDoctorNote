@@ -10,11 +10,10 @@ import {
 const initialState = {
     patients: [],
     search: '',
-    paginator: []
-
+    paginator: {}
 }
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
     switch (action.type) {
         case GET_PATIENTS:
             return {
@@ -28,13 +27,13 @@ export default function (state = initialState, action) {
                     patient => patient.id !== action.payload
                 )
             };
-        // case UPDATE_PATIENT:
-        //     return {
-        //         ...state,
-        //         patients: state.patients.map(patient => {
-        //             return patient.id !== action.payload.id ? patient : action.payload
-        //         })
-        //     };
+            // case UPDATE_PATIENT:
+            //     return {
+            //         ...state,
+            //         patients: state.patients.map(patient => {
+            //             return patient.id !== action.payload.id ? patient : action.payload
+            //         })
+            //     };
         case ADD_PATIENT:
             return {
                 ...state,
@@ -48,8 +47,8 @@ export default function (state = initialState, action) {
         case GET_PAGINATOR_PATIENTS:
             const LIMIT_PAGE = 18
 
-            const end_page = (action.payload.page * LIMIT_PAGE > action.payload.total)
-                ? action.payload.total : action.payload.page * LIMIT_PAGE
+            const end_page = (action.payload.page * LIMIT_PAGE > action.payload.total) ?
+                action.payload.total : action.payload.page * LIMIT_PAGE
 
             let start_page = 0
             if (action.payload.total > 0) {

@@ -8,7 +8,6 @@ import { Provider } from 'react-redux';
 import store from '../store';
 
 
-
 import { loadUser } from "../actions/auth"
 
 export default class App extends Component {
