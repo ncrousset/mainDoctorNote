@@ -41,12 +41,13 @@ export class ResetPassword extends Component {
 
         return (
             <form method="post" action="#" className="mt-10" onSubmit={this.onSubmit} >
-                <div class="mt-7">
+                <div className="mt-7">
                     <input
                         required
                         type="email"
                         placeholder="Email"
                         name="email"
+                        autoComplete="off"
                         onChange={this.onChange}
                         className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg pl-2 hover:bg-blue-100 focus:bg-blue-100 focus:ring-0" />
                 </div>
