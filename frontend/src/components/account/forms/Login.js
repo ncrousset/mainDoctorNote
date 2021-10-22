@@ -29,8 +29,7 @@ export class Login extends Component {
         if (this.props.isAuthenticated) {
             return <Redirect to="/patients" />
         }
-
-        const { username, password } = this.state;
+        
         return (
             <form method="#" action="#" className="mt-10" onSubmit={this.onSubmit} >
                 <div>
@@ -38,24 +37,24 @@ export class Login extends Component {
                         type="text"
                         placeholder="Correo electronico"
                         name="username"
-                        value={username}
                         onChange={this.onChange}
+                        autoComplete="on"
                         className="mt-1 block w-full border-none bg-gray-100 h-11 rounded-xl shadow-lg pl-2 hover:bg-blue-100 focus:bg-blue-100 focus:ring-0" />
                 </div>
-                <div class="mt-7">
+                <div className="mt-7">
                     <input
                         type="password"
                         placeholder="Contraseña"
                         name="password"
-                        value={password}
+                        autoComplete="on"
                         onChange={this.onChange}
                         className="mt-1 block w-full border-none bg-gray-100 h-11 pl-2 rounded-xl shadow-lg hover:bg-blue-100 focus:bg-blue-100 focus:ring-0" />
                 </div>
 
                 <div className="mt-7 flex">
-                    <label for="remember_me" className="inline-flex items-center w-full cursor-pointer">
+                    <label  className="inline-flex items-center w-full cursor-pointer">
                         <input id="remember_me" type="checkbox" className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember" />
-                        <span class="ml-2 text-sm text-gray-600">
+                        <span className="ml-2 text-sm text-gray-600">
                             Recuerdame
                         </span>
                     </label>
@@ -80,7 +79,7 @@ export class Login extends Component {
 
                 <div className="mt-7">
                     <div className="flex justify-center items-center">
-                        <label className="mr-2" >¿Eres nuevo? </label>
+                        <span  className="mr-2" >¿Eres nuevo? </span>
                         <Link
                             to="/accounts/register/"
                             className=" text-green-500 transition duration-500 ease-in-out  transform hover:-translate-x hover:scale-105">

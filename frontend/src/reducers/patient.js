@@ -21,7 +21,7 @@ import {
 } from '../actions/types'
 
 const initialState = {
-    patient: null,
+    patient: {},
     session: 'background',
     background: [],
     medical_histories: [],

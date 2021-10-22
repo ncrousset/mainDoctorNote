@@ -69,55 +69,55 @@ export class CardPatientDetail extends Component {
                         <FaUserAlt className="mr-2" /><span className="capitalize"> {this.props.patient.full_name} </span>
                     </h2>
                     <ul className="grid grid-cols-3 gap-3">
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <RiUserFill className="relative top-1 mr-1" /> First name
                             </label>
                             <span className="pl-5 capitalize">{this.props.patient.first_name}</span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <RiUserFill className="relative top-1 mr-1" /> Last name
                             </label>
                             <span className="pl-5 capitalize">{this.props.patient.last_name}</span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <FaCalendarAlt className="relative top-1 mr-1" /> Birth date
                             </label>
                             <span className="pl-5">{ this.dateString(this.props.patient.birth_date) }</span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <HiIdentification className="relative top-1 mr-1" /> Insurance
                             </label>
                             <span className="pl-5">{this.props.patient.insurance}</span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <HiIdentification className="relative top-1 mr-1" /> IDD
                             </label>
                             <span className="pl-5">{this.props.patient.idd}</span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <FaPhoneAlt className="relative top-1 mr-1" /> Phone
                             </label>
                             <span className="pl-5">{this.props.patient.phone}</span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <FaPhoneAlt className="relative top-1 mr-1" /> Sex
                             </label>
                             <span className="pl-5 capitalize">{this.SEX[this.props.patient.sex]}</span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <FaCalendarAlt className="relative top-1 mr-1" /> Next appointment
                             </label>
                             <span className="pl-5">{ this.dateString(this.props.patient.next_appointment, true) } </span>
                         </li>
-                        <li class="px-3 py-1 ">
+                        <li className="px-3 py-1 ">
                             <label className="font-semibold flex">
                                 <FaMailBulk className="relative top-1 mr-1" /> Email
                             </label>

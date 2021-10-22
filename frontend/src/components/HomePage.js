@@ -42,14 +42,14 @@ export class HomePage extends Component {
         return (
             <Router>
                 <Switch>
-                    {/* <Route exact path='/' component={Landing} ></Route>
+                    <Route exact path='/' component={Landing} ></Route>
                     <Route path='/accounts/login' component={LoginPage}></Route>
                     <Route path='/accounts/register' component={RegisterPage}></Route>
                     <Route path='/accounts/reset_password' component={ResetPasswordPage}></Route>
                     <Route path="/accounts/changer_password/:token" component={ChangerPasswordPage}></Route>
-                    <PrivateRoute exact path='/calendar' component={Calendar} ></PrivateRoute> */}
+                    <PrivateRoute exact path='/calendar' component={Calendar} ></PrivateRoute>
                     <PrivateRoute exact path='/patients' component={PatientListPage} ></PrivateRoute>
-                    {/* <PrivateRoute path='/patients/:id' component={PatientDetailPage}  ></PrivateRoute> */}
+                    <PrivateRoute path='/patients/:id' component={PatientDetailPage}  ></PrivateRoute>
                 </Switch>
             </Router>
         );
