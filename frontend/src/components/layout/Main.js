@@ -12,9 +12,9 @@ const Main = (props) => {
                 <Sidebar />
                 <div>
                     <Header />
-                    {/* <div className="container">
+                    <div className="container">
                         {props.children}
-                    </div> */}
+                    </div>
                 </div>
             </div>
         </Fragment>

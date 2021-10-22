@@ -7,10 +7,10 @@ import { HiIdentification } from "react-icons/hi";
 const CardPatient = ({ patient, onDelete }) => {
     return (
         <div className="p-2 lg:w-1/3 md:w-1/2 w-full ">
-            <Link to={`/patients/${patient.id}`}>
+            <Link to={`/patients/${patient.id}`}> 
                 <div className="h-full flex relative items-center border-gray-200 border p-4 rounded-lg bg-white">
 
-                    <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
+                    <img alt="team" className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"
                         src={ `https://randomuser.me/api/portraits/${ (patient.sex == 'm') ? 'men' : 'women' }/${patient.id}.jpg`} />
                     {/* https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50 */}
                     <div className="flex-grow">

@@ -49,7 +49,7 @@ export class PatientListPage extends Component {
     render() {
         return (
             <Main>
-                {/* <section className="text-gray-600 body-font w-12/12 mr-1 relative h-full">
+                <section className="text-gray-600 body-font w-12/12 mr-1 relative h-full">
                     <div className="container px-5 py-5 mx-auto ">
                         <div className="mb-5 justify-between flex">
                             <button onClick={this.showCreateForm} className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Add Patient</button>
@@ -57,8 +57,7 @@ export class PatientListPage extends Component {
 
                         <div className="flex flex-wrap -m-2">
                             {this.props.patients.map(patient => (
-
-                                <CardPatient patient={patient} onDelete={this.props.deletePatient} />
+                                <CardPatient key={patient.id} patient={patient} onDelete={this.props.deletePatient} />
                             ))}
 
                             {this.props.patients.length == 0 &&
@@ -71,7 +70,7 @@ export class PatientListPage extends Component {
 
                     <Paginator pagination={this.props.pagination != null && this.props.pagination} />
                 </section>
-                {this.state.show && <ModalPatientForm onClose={() => this.hideCreateForm()} />} */}
+                {this.state.show && <ModalPatientForm onClose={() => this.hideCreateForm()} />}
 
             </Main >
         )
